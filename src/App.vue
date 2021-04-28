@@ -8,19 +8,22 @@
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
           </q-avatar>
-          Title
+          Blog Haven
         </q-toolbar-title>
-
-        <q-btn dense flat round icon="menu" @click="right = !right" />
-      </q-toolbar>
-
-      <q-tabs align="left">
+<q-tabs align="left">
         <q-route-tab to="/home" label="Home" />
-        <q-route-tab to="/signup" label="sign-up" />
+        <!-- <q-route-tab to="/signup" label="sign-up" /> -->
         <q-route-tab to="/about" label="about" />
-        <q-route-tab to="/login" label="Login" />
+        <!-- <q-route-tab to="/login" label="Login" /> -->
+
+        
         <q-route-tab to="/myprofile" label="Profile" />
+        <q-route-tab  ><login><Login/></login></q-route-tab>
+       
        </q-tabs>
+     </q-toolbar>
+
+      
     </q-header>
 
     <q-drawer v-model="left" side="left" overlay elevated>
@@ -28,15 +31,13 @@
         <div class="q-pa-md" style="max-width: 350px">
     <q-list bordered separator>
       <q-item clickable v-ripple>
-        <q-item-section><login><Login/></login></q-item-section>
+        <q-item-section><sign-up><SignUp/></sign-up></q-item-section>
       </q-item>
     </q-list>
         </div>
     </q-drawer>
 
-    <q-drawer show-if-above v-model="right" side="right" elevated>
-      <!-- drawer content -->
-    </q-drawer>
+  
 
     <q-page-container>
       <router-view />
@@ -47,15 +48,18 @@
 
 <script>
 import Login from './components/Login'
+import SignUp from './components/SignUp'
 export default {
   components:{
-    "login":Login
+    "login": Login,
+    "sign-up":SignUp
+    
   },
  
    data () {
     return {
-      left: true,
-      right: true
+      left: false,
+      right: false
     }
   }
 }

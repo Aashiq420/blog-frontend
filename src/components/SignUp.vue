@@ -1,12 +1,12 @@
 <template>
-   <q-btn label="Login" color="primary"
+   <q-btn label="Sign-Up" color="primary"
     @click="medium = true" />
      <q-dialog
       v-model="medium"
     >
       <q-card style="width: 700px; max-width: 80vw;">
         <q-card-section>
-          <div class="text-h6">Login</div>
+          <div class="text-h6">Sign-up</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
@@ -35,6 +35,7 @@
        
       />
 
+      <q-toggle v-model="accept" label="I accept the license and terms" />
 
       <div>
         <q-btn label="Submit" type="submit" color="primary"/>
@@ -89,7 +90,7 @@ export default {
     onReset () {
       this.name = null
       this.age = null
-     
+      this.accept = false
     }
   }
 }
