@@ -27,6 +27,13 @@
     </q-header>
 
     <q-drawer v-model="left" side="left" overlay elevated>
+
+      <q-toolbar-title>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+          </q-avatar>
+          Blog Haven
+        </q-toolbar-title>
       <!-- drawer content -->
         <div class="q-pa-md" style="max-width: 350px">
     <q-list bordered separator>

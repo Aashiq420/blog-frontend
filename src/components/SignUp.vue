@@ -1,36 +1,45 @@
 <template>
-   <q-btn label="Sign-Up" color="primary"
-    @click="medium = true" />
-     <q-dialog
-      v-model="medium"
-    >
-      <q-card style="width: 700px; max-width: 80vw;">
-        <q-card-section>
-          <div class="text-h6">Sign-up</div>
+
+ <q-btn label="Close Icon" color="primary" @click="icon = true" />
+
+ <q-dialog v-model="icon">
+      <q-card style="height: -webkit-fill-available;width: -webkit-fill-available;">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">Sign-Up</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
 
-        <q-card-section class="q-pt-none">
-<div class="q-pa-md" style="max-width: 400px">
+          <q-card-section class="q-pt-none">
+          <div class="q-pa-md" style="max-width: 400px">
 
     <q-form
       @submit="onSubmit"
       @reset="onReset"
-      class="q-gutter-md"
+      class="q-gutter-md fixed-center"
     >
       <q-input
         filled
-        v-model="name"
-        label="Your name *"
-        hint="Name and surname"
+        v-model="username"
+        label="Username *"
+        hint=""
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please type something']"
       />
+      <q-input
+        filled
+        v-model="email"
+        label="Email *"
+        lazy-rules
+        :rules="[ val => val && val.length > 0 || 'Please type something']"
+      />
+      
 
       <q-input
         square outlined
-         v-model="age" 
+         v-model="password" 
          lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Please Enter Age']"
+        :rules="[ val => val && val.length > 0 || 'Rnter a Password']"
       
        
       />
@@ -40,30 +49,39 @@
       <div>
         <q-btn label="Submit" type="submit" color="primary"/>
         <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-        <q-btn flat label="Close" v-close-popup />
 
       </div>
     </q-form>
 
-  </div>        </q-card-section>
-
-        <q-card-actions align="top-right" class="bg-white text-teal">
-          <q-btn flat label="Close" v-close-popup />
-        </q-card-actions>
+  </div>   
+   </q-card-section>
       </q-card>
     </q-dialog>
+   
 </template>
 
 <script>
 export default {
-  name:"Login",
   data () {
     return {
-      name: null,
-      age: null,
+      icon: false,
+     
+    }
+  }
+}
+</script>
+<script>
+export default {
+  name:"Sign-UP",
+  data () {
+    return {
+      icon:false,
+      username: null,
+      email:null,
+      password: null,
 
       accept: false,
-      medium:false
+      
     }
   },
 
@@ -75,6 +93,7 @@ export default {
           textColor: 'white',
           icon: 'warning',
           message: 'You need to accept the license and terms first'
+
         })
       }
       else {
@@ -88,9 +107,11 @@ export default {
     },
 
     onReset () {
-      this.name = null
-      this.age = null
-      this.accept = false
+      this.username = null
+      this.email=null
+      this.password = null
+      this.accept=false
+     
     }
   }
 }
