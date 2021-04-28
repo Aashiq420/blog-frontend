@@ -1,6 +1,6 @@
 <template>
 <div class="home">
-  <h2 class="relative-position">Hot Topics</h2>
+  <h2 class="heading">Hot Topics</h2>
   <div class="car">
   <q-carousel style="width:60%"
         class="carousel"
@@ -32,7 +32,7 @@
   </div>
 
   <div class="blogs">
-    <h3>Browse blogs</h3>
+    <h3 class="heading">Browse blogs</h3>
     <q-list>
       <q-item>
         <div class="blog-card">
@@ -53,57 +53,7 @@
                 </p>
               </q-item-label>
               <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
-                <span class="cursor-pointer">Read more</span>
-              </q-item-label>
-            </q-item-section>
-          </div>
-        </div>
-      </q-item>
-
-      <q-item>
-        <div class="blog-card">
-          <div class="thumbnail">
-            <img class="blog-img" src="https://cdn.quasar.dev/img/mountains.jpg">
-          </div>
-          <div class="blog-data"> 
-            <q-item-section top>
-              <q-item-label lines="1">
-                <span class="text-weight-large blog-title" >This is the Blog Title</span><br>
-                <span class="text-grey-8 blog-poster"> by John Doe</span>
-              </q-item-label>
-              <q-separator />
-              <br>
-              <q-item-label caption lines="3">
-                <p class="blog-text ">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere sit ipsa saepe fugit magnam, optio repellendus vitae minima rerum accusantium facilis delectus dolorum. Consequatur officia minus nulla numquam, adipisci, porro error culpa ullam aliquid unde consequuntur reprehenderit ab eius, amet perferendis quaerat repellendus necessitatibus rerum? Iure tempora in, nobis ipsam nulla at. Blanditiis dicta placeat maxime dolore aliquam officia, impedit tempora quidem ea, illum quas fuga voluptatem cum eos eius magni laudantium omnis corrupti, facilis deleniti! Rerum quae voluptas harum sit ad aliquid consequatur est deserunt iure, voluptatum accusantium dignissimos quis quo itaque earum aspernatur delectus atque! Odit, atque non.
-                </p>
-              </q-item-label>
-              <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
-                <span class="cursor-pointer">Read more</span>
-              </q-item-label>
-            </q-item-section>
-          </div>
-        </div>
-      </q-item>
-      <q-item>
-        <div class="blog-card">
-          <div class="thumbnail">
-            <img class="blog-img" src="https://cdn.quasar.dev/img/mountains.jpg">
-          </div>
-          <div class="blog-data"> 
-            <q-item-section top>
-              <q-item-label lines="1">
-                <span class="text-weight-large blog-title" >This is the Blog Title</span><br>
-                <span class="text-grey-8 blog-poster"> by John Doe</span>
-              </q-item-label>
-              <q-separator />
-              <br>
-              <q-item-label caption lines="3">
-                <p class="blog-text ">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere sit ipsa saepe fugit magnam, optio repellendus vitae minima rerum accusantium facilis delectus dolorum. Consequatur officia minus nulla numquam, adipisci, porro error culpa ullam aliquid unde consequuntur reprehenderit ab eius, amet perferendis quaerat repellendus necessitatibus rerum? Iure tempora in, nobis ipsam nulla at. Blanditiis dicta placeat maxime dolore aliquam officia, impedit tempora quidem ea, illum quas fuga voluptatem cum eos eius magni laudantium omnis corrupti, facilis deleniti! Rerum quae voluptas harum sit ad aliquid consequatur est deserunt iure, voluptatum accusantium dignissimos quis quo itaque earum aspernatur delectus atque! Odit, atque non.
-                </p>
-              </q-item-label>
-              <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
+                <q-btn flat round color="primary" icon="fas fa-thumbs-up" /> |
                 <span class="cursor-pointer">Read more</span>
               </q-item-label>
             </q-item-section>
@@ -119,7 +69,7 @@
 export default {
   data () {
     return {slide: 1,
-      autoplay: 2000,
+      autoplay: 5000,
       lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     }
   }
@@ -167,5 +117,8 @@ export default {
   }
 .thumbnail {
   width: 15%;
+}
+.heading {
+  text-align: center;
 }
 </style>
