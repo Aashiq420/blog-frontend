@@ -16,7 +16,7 @@
         @mouseleave="autoplay = true"
       >
         <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" >
-            <div class="absolute-top custom-caption">
+          <div class="absolute-top custom-caption">
             <div class="text-h2">First stop</div>
             <div class="text-subtitle1">Mountains</div>
           </div>

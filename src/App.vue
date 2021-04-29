@@ -3,35 +3,23 @@
     <q-header elevated class="bg-primary text-white" height-hint="98">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="left = !left" />
-
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
-          </q-avatar>
           Blog Haven
         </q-toolbar-title>
-<q-tabs align="left">
+        <q-tabs align="left">
         <q-route-tab to="/home" label="Home" />
         <!-- <q-route-tab to="/signup" label="sign-up" /> -->
         <q-route-tab to="/about" label="about" />
         <!-- <q-route-tab to="/login" label="Login" /> -->
-
-        
         <q-route-tab to="/myprofile" label="Profile" />
-        <q-route-tab  ><login><Login/></login></q-route-tab>
-       
+        <q-route-tab  ><login><Login/></login></q-route-tab>  
        </q-tabs>
-     </q-toolbar>
-
-      
+      </q-toolbar>
     </q-header>
 
     <q-drawer v-model="left" side="left" overlay elevated>
 
       <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
-          </q-avatar>
           Blog Haven
         </q-toolbar-title>
       <!-- drawer content -->

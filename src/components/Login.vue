@@ -7,9 +7,9 @@
     >
       <q-card style="width: 700px; max-width: 80vw;">
         <q-card-section>
-          <div class="formhead">
-            <div class="text-h6">Login</div>
-                  <q-btn flat label="Close" v-close-popup />
+  <div class="formhead">
+  <div class="text-h6">Login</div>
+  <q-btn flat label="Close" v-close-popup />
 </div>
           
 
