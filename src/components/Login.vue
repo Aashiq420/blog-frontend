@@ -1,4 +1,5 @@
 <template>
+<div>
    <q-btn label="Login" color="primary"
     @click="medium = true" />
      <q-dialog
@@ -20,14 +21,14 @@
     <q-form
       @submit="onSubmit"
       @reset="onReset"
-      class="q-gutter-md fixed-center"
-      style="width:45%;margin-top:15px"
+      class="q-gutter-md fixed-center "
+      style="width:inherit"
     >
       <q-input
         filled
         v-model="name"
         label="Email *"
-        hint=""
+       
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please Enter Email']"
       />
@@ -50,12 +51,14 @@
       </div>
     </q-form>
 
-  </div>        </q-card-section>
+  </div>       
+   </q-card-section>
 
         <q-card-actions align="top-right" class="bg-white text-teal">
         </q-card-actions>
       </q-card>
     </q-dialog>
+    </div>
 </template>
 
 <script>
@@ -65,7 +68,6 @@ export default {
     return {
       name: null,
       password: null,
-
       accept: false,
       medium:false
     }
@@ -92,6 +94,7 @@ export default {
 
     onReset () {
       this.name = null
+      this.email= null
       this.password = null
      
     }
