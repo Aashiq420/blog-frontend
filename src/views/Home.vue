@@ -2,7 +2,7 @@
 <div class="home">
   <h2 class="heading">Hot Topics</h2>
   <div class="car">
-  <q-carousel style="width:60%"
+  <q-carousel style="width:80%"
         class="carousel"
         animated
         v-model="slide"
@@ -16,7 +16,7 @@
         @mouseleave="autoplay = true"
       >
         <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" >
-            <div class="absolute-bottom custom-caption">
+            <div class="absolute-top custom-caption">
             <div class="text-h2">First stop</div>
             <div class="text-subtitle1">Mountains</div>
           </div>
@@ -87,8 +87,8 @@ export default {
   display: grid;
 }
 .carousel {
-  right: 20%;
-  left: 20%;
+  right: 10%;
+  left: 10%;
 }
 .blog-img {
   max-width: 90%;
