@@ -1,30 +1,29 @@
 <template>
 <q-layout view="hHr LpR fFf">
-    <q-header elevated class="bg-primary text-white" height-hint="98">
-      <q-toolbar>
+  <q-header elevated class="bg-primary text-white" height-hint="98">
+    <q-toolbar>
         <q-btn dense flat round icon="menu" @click="left = !left" />
-
-        <q-toolbar-title>
+      <q-toolbar-title>
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
           </q-avatar>
           Blog Haven
-        </q-toolbar-title>
-<q-tabs align="left">
+      </q-toolbar-title>
+      <q-tabs align="left">
         <q-route-tab to="/home" label="Home" />
         <!-- <q-route-tab to="/signup" label="sign-up" /> -->
         <q-route-tab to="/about" label="about" />
         <!-- <q-route-tab to="/login" label="Login" /> -->
 
         
-        <q-route-tab to="/myprofile" label="Profile" />
-        <q-route-tab  ><login><Login/></login></q-route-tab>
-       
+        <q-route-tab v-if="loggedOn" to="/myprofile" label="Profile" />
+        <q-route-tab><login><Login/></login></q-route-tab>
+  
        </q-tabs>
-     </q-toolbar>
+    </q-toolbar>
 
       
-    </q-header>
+  </q-header>
 
     <q-drawer v-model="left" side="left" overlay elevated>
 
@@ -46,11 +45,11 @@
 
   
 
-    <q-page-container>
-      <router-view />
-    </q-page-container>
+  <q-page-container>
+    <router-view />
+  </q-page-container>
 
-  </q-layout>
+</q-layout>
 </template>
 
 <script>
@@ -66,8 +65,26 @@ export default {
    data () {
     return {
       left: false,
-      right: false
+   
     }
+  },
+  computed:{
+    loggedOn: {
+      get(){
+        return this.$store.state.loggedOn
+      },
+      set(value){
+        this.$store.commit(' updateloggedOnStatus', value)
+      }
+    },
+    signedUp: {
+      get(){
+        return this.$store.state.signedUp
+      },
+      set(value){
+        this.$store.commit('updatesignedUpStatus', value)
+      }
+    },
   }
 }
 </script>
