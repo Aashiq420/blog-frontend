@@ -4,7 +4,7 @@
      <q-dialog
       v-model="medium"
     >
-      <q-card style="width: 700px; max-width: 80vw;">
+      <q-card style="width:  -webkit-fill-available;height: -webkit-fill-available">
         <q-card-section>
           <div class="text-h6">Sign-up</div>
         </q-card-section>
@@ -15,24 +15,30 @@
     <q-form
       @submit="onSubmit"
       @reset="onReset"
-      class="q-gutter-md"
+      class="q-gutter-md fixed-center"
     >
       <q-input
         filled
         v-model="name"
-        label="Your name *"
-        hint="Name and surname"
+        label="Username *"
+        hint="Enter a Username"
         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Please type something']"
+        :rules="[ val => val && val.length > 0 || 'Please Enter Username']"
+      />
+      <q-input
+        filled
+        v-model="email"
+        label="Email *"
+        lazy-rules
+        :rules="[ val => val && val.length > 0 || 'Enter email']"
       />
 
       <q-input
         square outlined
-         v-model="age" 
+         v-model="password" 
+         placeholder="Password"
          lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Please Enter Age']"
-      
-       
+        :rules="[ val => val && val.length > 0 || 'Password']"
       />
 
       <q-toggle v-model="accept" label="I accept the license and terms" />
@@ -47,9 +53,9 @@
 
   </div>        </q-card-section>
 
-        <q-card-actions align="top-right" class="bg-white text-teal">
+        <!-- <q-card-actions align="top-right" class="bg-white text-teal">
           <q-btn flat label="Close" v-close-popup />
-        </q-card-actions>
+        </q-card-actions> -->
       </q-card>
     </q-dialog>
 </template>
@@ -60,13 +66,12 @@ export default {
   data () {
     return {
       name: null,
-      age: null,
-
+      email: null,
+      password:null,
       accept: false,
-      medium:false
+      medium:false,
     }
   },
-
   methods: {
     onSubmit () {
       if (this.accept !== true) {
@@ -86,10 +91,10 @@ export default {
         })
       }
     },
-
     onReset () {
       this.name = null
-      this.age = null
+      this.email = null
+      this.password=null
       this.accept = false
     }
   }
@@ -97,5 +102,4 @@ export default {
 </script>
 
 <style>
-
 </style>
