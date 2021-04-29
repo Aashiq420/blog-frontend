@@ -75,6 +75,8 @@ export default {
   methods: {
     onSubmit () {
       if (this.accept !== true) {
+        alert('You need to accept the license and terms first'
+)
         this.$q.notify({
           color: 'red-5',
           textColor: 'white',
@@ -82,7 +84,13 @@ export default {
           message: 'You need to accept the license and terms first'
         })
       }
-      else {
+      else {          
+        alert('submitted')
+        if (confirm){
+          window.location.href='http://localhost:8080/myprofile'
+
+        }
+
         this.$q.notify({
           color: 'green-4',
           textColor: 'white',

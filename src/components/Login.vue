@@ -26,8 +26,8 @@
     >
       <q-input
         filled
-        v-model="name"
-        label="Email *"
+        v-model="email"
+        label="Usename or Email"
        
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please Enter Email']"
@@ -66,9 +66,9 @@ export default {
   name:"Login",
   data () {
     return {
-      name: null,
+      email: null,
       password: null,
-      accept: false,
+      
       medium:false
     }
   },
