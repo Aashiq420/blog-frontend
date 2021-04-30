@@ -3,6 +3,7 @@
   <q-header elevated class="bg-primary text-white" height-hint="98">
     <q-toolbar>
         <q-btn dense flat round icon="menu" @click="left = !left" />
+
         <q-toolbar-title>
           Blog Haven
         </q-toolbar-title>
@@ -21,7 +22,8 @@
     <q-drawer v-model="left" side="left" overlay elevated>
 
       <q-toolbar-title>
-          Blog Haven
+         <i class="fas fa-feather-alt"></i>
+ Blog Haven 
         </q-toolbar-title>
       <!-- drawer content -->
         <div class="q-pa-md" style="max-width: 350px">
@@ -76,3 +78,15 @@ export default {
   }
 }
 </script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Original+Surfer&display=swap');
+
+*{
+  
+  font-family: 'Original Surfer', cursive;
+
+
+
+}
+
+</style>

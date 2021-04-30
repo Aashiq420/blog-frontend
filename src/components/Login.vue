@@ -27,7 +27,7 @@
       <q-input
         filled
         v-model="email"
-        label="Usename or Email"
+        label="Usename"
        
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please Enter Email']"
@@ -47,8 +47,11 @@
       <div>
         <q-btn label="Submit" type="submit" color="primary"/>
         <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+        <SignUp/>
+        
 
       </div>
+
     </q-form>
 
   </div>       
@@ -62,8 +65,12 @@
 </template>
 
 <script>
+import SignUp from './SignUp'
 export default {
   name:"Login",
+  components:{
+      SignUp
+  },
   data () {
     return {
       email: null,
@@ -74,6 +81,10 @@ export default {
   },
 
   methods: {
+    close(){
+      
+
+    },
     onSubmit () {
       if (this.accept !== true) {
         this.$q.notify({
