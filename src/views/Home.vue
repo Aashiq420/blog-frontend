@@ -43,7 +43,7 @@
             <q-item-section top>
               <q-item-label lines="1">
                 <span class="text-weight-large blog-title" >{{ blog.blog_title }}</span><br>
-                <span class="text-grey-8 blog-poster"> by John Doe</span>
+                <span class="text-grey-8 blog-poster"> by {{ users[blog.user_id-1].username }}</span>
               </q-item-label>
               <q-separator />
               <br>
@@ -73,23 +73,48 @@ export default {
       slide: 1,
       autoplay: 5000,
       blogs: [],
+      users: [],
     }
   },
   created() {
-    const url = 'http://localhost:3000/blogs'
-    fetch(url,{
-      //method: "GET", //get post put delete, default GET
-      //body: JSON.stringify(), //object containing data from vue from 2way data binding
-      mode: "cors", //if FE and BE are on diffeent hosts/url
-      headers: {
-        "Content-Type": "application/json"
-      },
-    }).then((response) => response.json())
-      .then((json) => {
-        //API response gets returned
-        console.log(json)
-        this.blogs = json
-      })
+    this.handleGetBlogs();
+    this.handleGetUsers();
+  },
+  methods: {
+    handleGetBlogs() {
+      const url = 'http://localhost:3000/blogs'
+      fetch(url,{
+        //method: "GET", //get post put delete, default GET
+        //body: JSON.stringify(), //object containing data from vue from 2way data binding
+        mode: "cors", //if FE and BE are on diffeent hosts/url
+        headers: {
+          "Content-Type": "application/json"
+        },
+      }).then((response) => response.json())
+        .then((json) => {
+          //API response gets returned
+          //console.log(json)
+          this.blogs = json
+        })
+    },
+    handleGetUsers() {
+      const url = 'http://localhost:3000/users'
+      fetch(url,{
+        //method: "GET", //get post put delete, default GET
+        //body: JSON.stringify(), //object containing data from vue from 2way data binding
+        mode: "cors", //if FE and BE are on diffeent hosts/url
+        headers: {
+          "Content-Type": "application/json"
+        },
+      }).then((response) => response.json())
+        .then((json) => {
+          //API response gets returned
+          console.log(json)
+          this.users = json
+          console.log(this.users)
+
+        })
+    }
   }
 }
 </script>
