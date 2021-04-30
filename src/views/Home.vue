@@ -34,7 +34,7 @@
   <div class="blogs">
     <h3 class="heading">Browse blogs</h3>
     <q-list>
-      <q-item>
+      <q-item v-for="blog in blogs" :key="blog.id">
         <div class="blog-card">
           <div class="thumbnail">
             <img class="blog-img" src="https://cdn.quasar.dev/img/mountains.jpg">
@@ -42,14 +42,14 @@
           <div class="blog-data"> 
             <q-item-section top>
               <q-item-label lines="1">
-                <span class="text-weight-large blog-title" >This is the Blog Title</span><br>
+                <span class="text-weight-large blog-title" >{{ blog.blog_title }}</span><br>
                 <span class="text-grey-8 blog-poster"> by John Doe</span>
               </q-item-label>
               <q-separator />
               <br>
               <q-item-label caption lines="3">
                 <p class="blog-text ">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere sit ipsa saepe fugit magnam, optio repellendus vitae minima rerum accusantium facilis delectus dolorum. Consequatur officia minus nulla numquam, adipisci, porro error culpa ullam aliquid unde consequuntur reprehenderit ab eius, amet perferendis quaerat repellendus necessitatibus rerum? Iure tempora in, nobis ipsam nulla at. Blanditiis dicta placeat maxime dolore aliquam officia, impedit tempora quidem ea, illum quas fuga voluptatem cum eos eius magni laudantium omnis corrupti, facilis deleniti! Rerum quae voluptas harum sit ad aliquid consequatur est deserunt iure, voluptatum accusantium dignissimos quis quo itaque earum aspernatur delectus atque! Odit, atque non.
+                  {{ blog.blog_content }}
                 </p>
               </q-item-label>
               <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
@@ -63,15 +63,33 @@
     </q-list>
   </div>
 </div>
-    
 </template>
+    
 <script>
+
 export default {
   data () {
-    return {slide: 1,
+    return {
+      slide: 1,
       autoplay: 5000,
-      lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      blogs: [],
     }
+  },
+  created() {
+    const url = 'http://localhost:3000/blogs'
+    fetch(url,{
+      //method: "GET", //get post put delete, default GET
+      //body: JSON.stringify(), //object containing data from vue from 2way data binding
+      mode: "cors", //if FE and BE are on diffeent hosts/url
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then((response) => response.json())
+      .then((json) => {
+        //API response gets returned
+        console.log(json)
+        this.blogs = json
+      })
   }
 }
 </script>
