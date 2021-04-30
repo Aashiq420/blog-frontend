@@ -1,7 +1,7 @@
 <template>
 <div>
    <q-btn label="Login" color="primary"
-    @click="medium = true" />
+    @click="medium = true " />
      <q-dialog
       v-model="medium"
     >
@@ -15,14 +15,14 @@
 
         </q-card-section>
 
-        <q-card-section class="q-pt-none">
+        <!-- <q-card-section class="q-pt-none" style="background-color:red"> -->
 <div class="q-pa-md" style="width:300px; height: 200px">
 
     <q-form
       @submit="onSubmit"
       @reset="onReset"
       class="q-gutter-md fixed-center "
-      style="width:inherit"
+      
     >
       <q-input
         filled
@@ -55,7 +55,7 @@
     </q-form>
 
   </div>       
-   </q-card-section>
+   <!-- </q-card-section> -->
 
         <q-card-actions align="top-right" class="bg-white text-teal">
         </q-card-actions>
@@ -82,6 +82,12 @@ export default {
 
   methods: {
     close(){
+      if (this.medium == true){
+        this.medium==false
+      }
+      else{
+        this.medium==true
+      }
       
 
     },
@@ -120,6 +126,6 @@ template{
 .formhead{
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2px;
+  /* margin-bottom: 2px; */
 }
 </style>

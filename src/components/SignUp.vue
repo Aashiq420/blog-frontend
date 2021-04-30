@@ -1,8 +1,8 @@
 <template>
    <q-btn label="Sign-Up" color="primary"
-    @click="medium = true" />
+    @click="large = true" />
      <q-dialog
-      v-model="medium"
+      v-model="large"
     >
       <q-card style="width:  -webkit-fill-available;height: -webkit-fill-available">
         <q-card-section>
@@ -69,7 +69,7 @@ export default {
       email: null,
       password:null,
       accept: false,
-      medium:false,
+      large:false,
     }
   },
   methods: {

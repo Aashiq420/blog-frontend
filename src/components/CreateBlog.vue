@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md" style="max-width: 400px">
+  <div class="q-pa-md" style="width: 400px">
     <q-form
       @submit="onSubmit"
       @reset="onReset"
@@ -20,6 +20,16 @@
       
         lazy-rules
         
+      />
+       <q-file
+        style="max-width:inherit"
+        v-model="filesImages"
+        filled
+        
+        label="Add Image"
+        multiple
+        accept=".jpg, image/*"
+        @rejected="onRejected"
       />
 
       <div>
