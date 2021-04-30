@@ -1,5 +1,5 @@
 <template>
-   <q-btn label="Sign-Up" color="primary"
+   <q-btn label="Sign-Up" color="negative"
     @click="medium = true" />
      <q-dialog
       v-model="medium"
@@ -18,7 +18,8 @@
       class="q-gutter-md"
     >
       <q-input
-        filled
+        square
+        outlined
         v-model="name"
         label="Your name *"
         hint="Name and surname"
@@ -28,7 +29,8 @@
 
       <q-input
         square outlined
-         v-model="age" 
+         v-model="age"
+        label="Your age *"
          lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please Enter Age']"
       
@@ -38,16 +40,15 @@
       <q-toggle v-model="accept" label="I accept the license and terms" />
 
       <div>
-        <q-btn label="Submit" type="submit" color="primary"/>
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-        <q-btn flat label="Close" v-close-popup />
+        <q-btn label="Submit" type="submit" color="dark"/>
+        <q-btn label="Reset" type="reset" color="negative" flat class="q-ml-sm" />
 
       </div>
     </q-form>
 
   </div>        </q-card-section>
 
-        <q-card-actions align="top-right" class="bg-white text-teal">
+        <q-card-actions align="top-right" class="bg-white text-dark">
           <q-btn flat label="Close" v-close-popup />
         </q-card-actions>
       </q-card>
