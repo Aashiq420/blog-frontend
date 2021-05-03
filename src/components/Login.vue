@@ -1,57 +1,45 @@
 <template>
-<div>
-   <q-btn label="Login" color="primary"
-    @click="medium = true " />
-     <q-dialog
+  <div>
+    <q-btn label="Login" color="primary"
+      @click="medium = true " />
+    <q-dialog
       v-model="medium"
     >
-      <q-card style="width: 700px; max-width: 80vw;">
-        <q-card-section>
-  <div class="formhead">
-  <div class="text-h6">Login</div>
-  <q-btn flat label="Close" v-close-popup />
-</div>
-          
-
-        </q-card-section>
+    <q-card style="width: 700px; max-width: 80vw;">
+    <q-card-section>
+      <div class="formhead">
+        <div class="text-h6">Login</div>
+        <q-btn flat label="Close" v-close-popup />
+      </div>
+    </q-card-section>
 
         <!-- <q-card-section class="q-pt-none" style="background-color:red"> -->
-<div class="q-pa-md" style="width:300px; height: 200px">
-
+  <div class="q-pa-md" style="width:300px; height: 200px">
     <q-form
       @submit="onSubmit"
       @reset="onReset"
       class="q-gutter-md fixed-center "
-      
     >
-      <q-input
-        filled
-        v-model="email"
-        label="Usename"
-       
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Please Enter Email']"
-      />
-
-      <q-input
-        square outlined
-         v-model="password" 
-         label="Password"
-         lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Invalid Password']"
+    <q-input
+      filled
+      v-model="email"
+      label="Usename"
       
-       
+      lazy-rules
+      :rules="[ val => val && val.length > 0 || 'Please Enter Email']"
       />
-
-
+    <q-input
+      square outlined
+        v-model="password" 
+        label="Password"
+        lazy-rules
+      :rules="[ val => val && val.length > 0 || 'Invalid Password']"
+      />
       <div>
         <q-btn label="Submit" type="submit" color="primary"/>
         <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
         <SignUp/>
-        
-
       </div>
-
     </q-form>
 
   </div>       
@@ -61,7 +49,7 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -88,8 +76,6 @@ export default {
       else{
         this.medium==true
       }
-      
-
     },
     onSubmit () {
       if (this.accept !== true) {
