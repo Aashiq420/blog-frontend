@@ -30,7 +30,11 @@
         multiple
         accept=".jpg, image/*"
         @rejected="onRejected"
+<<<<<<< HEAD
       /> 
+=======
+      />
+>>>>>>> da1588564591813be090b82a4da5b3371753b6bc
 
       <div>
         <q-btn label="Post" type="submit" color="primary"/>
