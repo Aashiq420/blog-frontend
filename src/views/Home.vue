@@ -109,9 +109,9 @@ export default {
       }).then((response) => response.json())
         .then((json) => {
           //API response gets returned
-          console.log(json)
+          //console.log(json)
           this.users = json
-          console.log(this.users)
+          //console.log(this.users)
 
         })
     }
