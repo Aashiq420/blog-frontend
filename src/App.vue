@@ -1,8 +1,9 @@
 <template>
 <q-layout view="hHr LpR fFf">
-    <q-header elevated class="bg-primary text-white" height-hint="98">
-      <q-toolbar>
+  <q-header elevated class="bg-primary text-white" height-hint="98">
+    <q-toolbar>
         <q-btn dense flat round icon="menu" @click="left = !left" />
+
         <q-toolbar-title>
           Blog Haven
         </q-toolbar-title>
@@ -11,16 +12,18 @@
         <!-- <q-route-tab to="/signup" label="sign-up" /> -->
         <q-route-tab to="/about" label="about" />
         <!-- <q-route-tab to="/login" label="Login" /> -->
-        <q-route-tab to="/myprofile" label="Profile" />
-        <q-route-tab  ><login><Login/></login></q-route-tab>  
+        <q-route-tab v-if="loggedOn" to="/myprofile" label="Profile" />
+        <q-route-tab><login><Login/></login></q-route-tab>
        </q-tabs>
-      </q-toolbar>
-    </q-header>
+    </q-toolbar>
+
+  </q-header>
 
     <q-drawer v-model="left" side="left" overlay elevated>
 
       <q-toolbar-title>
-          Blog Haven
+         <i class="fas fa-feather-alt"></i>
+ Blog Haven 
         </q-toolbar-title>
       <!-- drawer content -->
         <div class="q-pa-md" style="max-width: 350px">
@@ -32,13 +35,11 @@
         </div>
     </q-drawer>
 
-  
+  <q-page-container>
+    <router-view />
+  </q-page-container>
 
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-
-  </q-layout>
+</q-layout>
 </template>
 
 <script>
@@ -54,8 +55,38 @@ export default {
    data () {
     return {
       left: false,
-      right: false
+   
     }
+  },
+  computed:{
+    loggedOn: {
+      get(){
+        return this.$store.state.loggedOn
+      },
+      set(value){
+        this.$store.commit(' updateloggedOnStatus', value)
+      }
+    },
+    signedUp: {
+      get(){
+        return this.$store.state.signedUp
+      },
+      set(value){
+        this.$store.commit('updatesignedUpStatus', value)
+      }
+    },
   }
 }
 </script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Original+Surfer&display=swap');
+
+*{
+  
+  font-family: 'Original Surfer', cursive;
+
+
+
+}
+
+</style>

@@ -55,6 +55,7 @@
               <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-uppercase">
                 <q-btn flat round color="primary" icon="fas fa-thumbs-up" /> |
                 <span class="cursor-pointer">Read more</span>
+                
               </q-item-label>
             </q-item-section>
           </div>
