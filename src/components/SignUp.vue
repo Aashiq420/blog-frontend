@@ -1,8 +1,8 @@
 <template>
    <q-btn label="Sign-Up" color="primary"
-    @click="medium = true" />
+    @click="large = true" />
      <q-dialog
-      v-model="medium"
+      v-model="large"
     >
       <q-card style="width:  -webkit-fill-available;height: -webkit-fill-available">
         <q-card-section>
@@ -69,12 +69,14 @@ export default {
       email: null,
       password:null,
       accept: false,
-      medium:false,
+      large:false,
     }
   },
   methods: {
     onSubmit () {
       if (this.accept !== true) {
+        alert('You need to accept the license and terms first'
+)
         this.$q.notify({
           color: 'red-5',
           textColor: 'white',
@@ -82,7 +84,13 @@ export default {
           message: 'You need to accept the license and terms first'
         })
       }
-      else {
+      else {          
+        alert('submitted')
+        if (confirm){
+          window.location.href='http://localhost:8080/myprofile'
+
+        }
+
         this.$q.notify({
           color: 'green-4',
           textColor: 'white',
@@ -102,4 +110,6 @@ export default {
 </script>
 
 <style>
+
+
 </style>
