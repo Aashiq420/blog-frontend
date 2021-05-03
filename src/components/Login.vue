@@ -1,7 +1,7 @@
 <template>
 <div>
    <q-btn label="Login" color="primary"
-    @click="medium = true" />
+    @click="medium = true " />
      <q-dialog
       v-model="medium"
     >
@@ -15,19 +15,19 @@
 
         </q-card-section>
 
-        <q-card-section class="q-pt-none">
+        <!-- <q-card-section class="q-pt-none" style="background-color:red"> -->
 <div class="q-pa-md" style="width:300px; height: 200px">
 
     <q-form
       @submit="onSubmit"
       @reset="onReset"
       class="q-gutter-md fixed-center "
-      style="width:inherit"
+      
     >
       <q-input
         filled
-        v-model="name"
-        label="Email *"
+        v-model="email"
+        label="Usename"
        
         lazy-rules
         :rules="[ val => val && val.length > 0 || 'Please Enter Email']"
@@ -47,12 +47,15 @@
       <div>
         <q-btn label="Submit" type="submit" color="primary"/>
         <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+        <SignUp/>
+        
 
       </div>
+
     </q-form>
 
   </div>       
-   </q-card-section>
+   <!-- </q-card-section> -->
 
         <q-card-actions align="top-right" class="bg-white text-teal">
         </q-card-actions>
@@ -62,18 +65,32 @@
 </template>
 
 <script>
+import SignUp from './SignUp'
 export default {
   name:"Login",
+  components:{
+      SignUp
+  },
   data () {
     return {
-      name: null,
+      email: null,
       password: null,
-      accept: false,
+      
       medium:false
     }
   },
 
   methods: {
+    close(){
+      if (this.medium == true){
+        this.medium==false
+      }
+      else{
+        this.medium==true
+      }
+      
+
+    },
     onSubmit () {
       if (this.accept !== true) {
         this.$q.notify({
@@ -109,6 +126,6 @@ template{
 .formhead{
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2px;
+  /* margin-bottom: 2px; */
 }
 </style>
