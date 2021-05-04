@@ -23,10 +23,10 @@
     <q-input
       filled
       v-model="email"
-      label="Usename"
+      label="E-mail"
       
       lazy-rules
-      :rules="[ val => val && val.length > 0 || 'Please Enter Email']"
+      :rules="[ val => val && val.length > 0 || 'Please Enter E-mail']"
       />
     <q-input
       square outlined
@@ -36,7 +36,7 @@
       :rules="[ val => val && val.length > 0 || 'Invalid Password']"
       />
       <div>
-        <q-btn label="Submit" type="submit" color="primary"/>
+        <q-btn label="Submit" type="submit" color="primary" @click.prevent="handleLogin"/>
         <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
         <SignUp/>
       </div>
@@ -94,12 +94,36 @@ export default {
         })
       }
     },
-
     onReset () {
       this.name = null
       this.email= null
       this.password = null
-     
+    },
+    handleLogin(){
+      console.log("click")
+      const url = 'http://localhost:3000/auth'
+      fetch(url,{
+        method: "POST", //get post put delete, default GET
+        body: JSON.stringify({
+          email: this.email,
+          password: this.password
+        }), //object containing data from vue from 2way data binding
+        mode: "cors", //if FE and BE are on diffeent hosts/url
+        headers: {
+          "Content-Type": "application/json"
+        },
+      }).then((response) => response.json())
+        .then((json) => {
+          console.log(json)
+          //API response gets returned
+          // console.log(users)
+          // console.log(this.email, this.password)
+          //this.blogs = json
+          // let user = users.filter(user => {
+          //   return user.username === this.email && user.password === this.password
+          // })
+          // console.log(user)
+        })
     }
   }
 }
