@@ -77,7 +77,7 @@ export default {
         headers: {
           "Content-Type": "application/json",
         },
-      })
+      }) 
         .then((response) => response.json())
         .then((json) => {
           //API response gets returned

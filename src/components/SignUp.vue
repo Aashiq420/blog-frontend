@@ -60,19 +60,19 @@
             <div>
               <q-btn
                 label="submit"
-                :icon= '"fas fa-paper-plane"'
+                :icon="'fas fa-paper-plane'"
                 type="submit"
                 @click.prevent="addUser()"
                 color="primary"
               />
               <q-btn
-                :icon= '"fas fa-redo-alt"'
+                :icon="'fas fa-redo-alt'"
                 type="reset"
                 color="primary"
                 flat
-                class="q-ml-sm "
+                class="q-ml-sm"
               />
-              
+
               <q-btn flat label="close" v-close-popup />
             </div>
           </q-form>
@@ -126,6 +126,7 @@ export default {
       this.name = null;
       this.email = null;
       this.password = null;
+      this.image = null;
       this.accept = false;
     },
     addUser() {
@@ -134,33 +135,32 @@ export default {
 
       reader.readAsDataURL(blob);
       reader.onload = () => {
-        console.log("file to base64 result:" + reader.result);
+        // console.log("file to base64 result:" + reader.result);
         this.image = reader.result;
+        const url = "http://localhost:3000/users";
+        fetch(url, {
+          method: "POST", //get post put delete, default GET
+          body: JSON.stringify({
+            username: this.name,
+            email: this.email,
+            password: this.password,
+            image: this.image,
+          }), //object containing data from vue from 2way data binding
+          mode: "cors", //if FE and BE are on diffeent hosts/url
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            //API response gets returned
+            console.log(json);
+          });
       };
+      
       reader.onerror = function (error) {
         console.log("Error: ", error);
       };
-
-      console.log("click");
-      const url = "http://localhost:3000/users";
-      fetch(url, {
-        method: "POST", //get post put delete, default GET
-        body: JSON.stringify({
-          username: this.name,
-          email: this.email,
-          password: this.password,
-          image: this.image,
-        }), //object containing data from vue from 2way data binding
-        mode: "cors", //if FE and BE are on diffeent hosts/url
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          //API response gets returned
-          console.log(json);
-        });
     },
   },
 };
