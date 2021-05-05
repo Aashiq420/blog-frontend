@@ -1,11 +1,11 @@
 <template>
-  <q-btn label="Sign-Up" color="primary" @click="large = true" />
+  <q-btn label="Register" color="primary" @click="large = true" />
   <q-dialog v-model="large">
     <q-card
       style="width: -webkit-fill-available; height: -webkit-fill-available"
     >
       <q-card-section>
-        <div class="text-h6">Sign-up</div>
+        <div class="text-h6">Register</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
@@ -30,14 +30,14 @@
               v-model="email"
               label="Email *"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Enter email']"
+              :rules="[(val) => (val && val.length > 0) || 'Enter Email']"
             />
 
             <q-input
               square
               outlined
               v-model="password"
-              placeholder="Password"
+              placeholder="Password *"
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Password']"
             />
@@ -56,22 +56,24 @@
               </template>
             </q-file>
 
-            <q-toggle v-model="accept" label="I accept the license and terms" />
+            <q-toggle v-model="accept" label="I accept the privacy policy" />
             <div>
               <q-btn
-                label="Submit"
+                label="submit"
+                :icon= '"fas fa-paper-plane"'
                 type="submit"
                 @click.prevent="addUser()"
                 color="primary"
               />
               <q-btn
-                label="Reset"
+                :icon= '"fas fa-redo-alt"'
                 type="reset"
                 color="primary"
                 flat
-                class="q-ml-sm"
+                class="q-ml-sm "
               />
-              <q-btn flat label="Close" v-close-popup />
+              
+              <q-btn flat label="close" v-close-popup />
             </div>
           </q-form>
         </div>

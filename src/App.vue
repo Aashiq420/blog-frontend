@@ -8,11 +8,11 @@
           Blog Haven
         </q-toolbar-title>
         <q-tabs align="left">
-        <q-route-tab to="/home" label="Home" />
+        <q-route-tab to="/" :icon= '"fas fa-users"' />
         <!-- <q-route-tab to="/signup" label="sign-up" /> -->
-        <q-route-tab to="/about" label="about" />
+        <q-route-tab to="/about" :icon= '"fas fa-info-circle"' />
         <!-- <q-route-tab to="/login" label="Login" /> -->
-        <q-route-tab v-if="loggedOn" to="/myprofile" label="Profile" />
+        <q-route-tab v-if="loggedOn" to="/myprofile" :icon= '"fas fa-user"' />
         <q-route-tab><login><Login/></login></q-route-tab>
        </q-tabs>
     </q-toolbar>
