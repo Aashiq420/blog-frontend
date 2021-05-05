@@ -46,7 +46,7 @@
                 type="reset"
                 color="primary"
                 flat
-                class="q-ml-sm"
+                class="q-ml-sm reset"
               />
               <SignUp />
             </div>
@@ -147,4 +147,8 @@ template {
   justify-content: space-between;
   /* margin-bottom: 2px; */
 }
+
+  .reset {
+    margin-right: 8px;
+  }
 </style>
