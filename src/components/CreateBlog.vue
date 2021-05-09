@@ -18,7 +18,7 @@
       <div>
         <q-btn label="Post" type="submit" color="primary" />
         <q-btn
-          label="Reset"
+          :icon="'fas fa-redo-alt'"
           type="reset"
           color="primary"
           flat
