@@ -19,6 +19,11 @@
     </div>
 
     <h1>My Posts</h1>
+    <span class="text-weight-large blog-title">{{ usersBlogs.blog_title }}</span
+    ><br />
+    <!-- <span class="text-grey-8 blog-poster">
+      by {{ usersBlogs[blog.user_id - 1].username }}</span
+    > -->
     <div data-aos="zoom-in">
       <div class="my-blogs">
         <q-list>
@@ -91,7 +96,11 @@ export default {
       create: true,
       edit: false,
       filesImages: null,
+      usersBlogs: [],
     };
+  },
+  created() {
+    this.handleGetUserBlogs();
   },
   methods: {
     onRejected(rejectedEntries) {
@@ -101,6 +110,30 @@ export default {
         type: "negative",
         message: `${rejectedEntries.length} file(s) did not pass validation constraints`,
       });
+    },
+
+    handleGetUserBlogs() {
+      const url = "http://localhost:3000/blogs-of-user/2";
+      fetch(url, {
+        //method: "GET", //get post put delete, default GET
+        //body: JSON.stringify(), //object containing data from vue from 2way data binding
+        mode: "cors", //if FE and BE are on diffeent hosts/url
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          //API response gets returned
+          //console.log(json)
+          this.usersBlogs = json;
+          for (i = 0; i < this.usersBlogs.length; i++) {
+			        var blog_title = this.usersBlogs[i].blog_title;
+              console.log(blog_title)
+          };
+          
+          console.log(this.usersBlogs.blog_title)
+        });
     },
 
     toggleEdit() {
@@ -114,5 +147,4 @@ export default {
 </script>
 
 <style>
-
 </style>
