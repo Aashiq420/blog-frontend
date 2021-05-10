@@ -1,25 +1,36 @@
 <template>
   <div class="container">
-    <div
-      class="q-pa-md q-gutter-y-md column items-start"
-      style="align-items: center"
-    >
-      <q-btn-group push>
-        <q-btn
-          push
-          label="Create Blog"
-          icon="fas fa-plus-square"
-          @click="toggleCreate"
-        />
-        <q-btn push label="Edit Blog" icon="fas fa-edit" @click="toggleEdit" />
-        <q-btn push label="Delete Blog" icon="fas fa-trash-alt" />
-      </q-btn-group>
-      <CreateBlog v-if="create" />
-      <EditPost v-if="edit" />
+    <div class="row">
+      <div class="col-sm-6"></div>
+      <div class="col-sm-6">
+        <div
+          class="q-pa-md q-gutter-y-md column items-start"
+          style="align-items: center"
+        >
+          <q-btn-group push>
+            <q-btn
+              push
+              label="Create Blog"
+              icon="fas fa-plus-square"
+              @click="toggleCreate"
+            />
+            <q-btn
+              push
+              label="Edit Blog"
+              icon="fas fa-edit"
+              @click="toggleEdit"
+            />
+            <q-btn push label="Delete Blog" icon="fas fa-trash-alt" />
+          </q-btn-group>
+          <CreateBlog v-if="create" />
+          <EditPost v-if="edit" />
+        </div>
+      </div>
     </div>
+
     <div>
       <div class="my-blogs">
-        <!-- <h1>{{ usersBlogs[0].username }}'s Posts</h1> -->
+        <h1>{{ usersBlogs[0].username }}'s Posts</h1>
         <q-item v-for="usersBlog in usersBlogs" :key="usersBlog.id">
           <div class="blog-card" data-aos="zoom-in">
             <div class="thumbnail">

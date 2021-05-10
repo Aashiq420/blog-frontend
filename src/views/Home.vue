@@ -36,7 +36,8 @@
                     blog.blog_title
                   }}</span><br />
                   <span class="text-grey-8 blog-poster">
-                    by {{ users[blog.user_id - 1].username }}</span>
+                    by {{ users[blog.user_id - 1].username }}
+                  </span>
                 </q-item-label>
                 <q-separator />
                 <br />
@@ -102,10 +103,7 @@
           })
           .then((response) => response.json())
           .then((json) => {
-            //API response gets returned
-            //console.log(json)
             this.users = json;
-            //console.log(this.users)
           });
       },
     },
