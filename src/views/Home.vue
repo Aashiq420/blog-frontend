@@ -75,13 +75,8 @@
                   }}</span
                   ><br />
                   <span class="text-grey-8 blog-poster">
-<<<<<<< HEAD
                     by {{ users[blog.user_id - 1].username }}
                   </span>
-=======
-                    by {{ users[blog.user_id - 1].username }}</span
-                  >
->>>>>>> bedcb313deb0f4dcc38486db941923abc838b60a
                 </q-item-label>
                 <q-separator />
                 <br />
@@ -157,7 +152,6 @@ export default {
           //console.log(this.users)
         });
     },
-<<<<<<< HEAD
     methods: {
       handleGetBlogs() {
         const url = "http://localhost:3000/blogs";
@@ -192,11 +186,9 @@ export default {
           });
       },
     },
-  };
-=======
   },
 };
->>>>>>> bedcb313deb0f4dcc38486db941923abc838b60a
+
 </script>
 
 <style>

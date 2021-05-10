@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-sm-6"></div>
+      <div class="col-sm-6">
+        <div class="user-card">
+            <h4>@{{ usersBlogs[0].username }}</h4>
+            <h5>Created: {{ usersBlogs[0].date_started }}</h5>
+        </div>
+      </div>
       <div class="col-sm-6">
         <div
           class="q-pa-md q-gutter-y-md column items-start"
@@ -30,7 +35,7 @@
 
     <div>
       <div class="my-blogs">
-        <h1>{{ usersBlogs[0].username }}'s Posts</h1>
+        <h1>Posts</h1>
         <q-item v-for="usersBlog in usersBlogs" :key="usersBlog.id">
           <div class="blog-card" data-aos="zoom-in">
             <div class="thumbnail">
@@ -155,5 +160,13 @@ export default {
 <style>
 .my-blogs h1 {
   text-align: center;
+}
+
+.user-card{
+  background-color: lime;
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+  padding: 15px;
 }
 </style>
