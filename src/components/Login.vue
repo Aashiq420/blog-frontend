@@ -6,7 +6,7 @@
         <q-card-section>
           <div class="formhead">
             <div class="text-h6">Login</div>
-            <q-btn flat :icon= '"fas fa-times"' v-close-popup />
+            <q-btn flat :icon="'fas fa-times'" v-close-popup />
           </div>
         </q-card-section>
 
@@ -39,10 +39,10 @@
                 label="Submit"
                 type="submit"
                 color="primary"
-                @click.prevent="handleLogin"
+                @click.prevent="handleLogin()"
               />
               <q-btn
-                :icon= '"fas fa-redo-alt"'
+                :icon="'fas fa-redo-alt'"
                 type="reset"
                 color="primary"
                 flat
@@ -63,6 +63,7 @@
 
 <script>
 import SignUp from "./SignUp";
+import Home from "../views/Home";
 
 export default {
   name: "Login",
@@ -124,6 +125,21 @@ export default {
         .then((response) => response.json())
         .then((json) => {
           console.log(json);
+          console.log("login authentication passed");
+          const url2 = "http://localhost:3000/users";
+          fetch(url2, {
+            mode: "cors", //if FE and BE are on diffeent hosts/url
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((res) => {
+              let user = res.filter((user) => {
+                return user.email === this.email;
+              });
+              console.log(user);
+            });
           //API response gets returned
           // console.log(users)
           // console.log(this.email, this.password)
@@ -148,7 +164,7 @@ template {
   /* margin-bottom: 2px; */
 }
 
-  .reset {
-    margin-right: 8px;
-  }
+.reset {
+  margin-right: 8px;
+}
 </style>

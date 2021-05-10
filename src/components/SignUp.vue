@@ -95,6 +95,7 @@ export default {
       email: null,
       password: null,
       image: null,
+      role: "user", //figure out way to do this better
       accept: false,
       large: false,
     };
@@ -133,6 +134,9 @@ export default {
       const blob = new Blob([this.image], { type: "image" });
       const reader = new FileReader();
 
+      console.log(this.username, this.email, this.password,
+      this.role)
+
       reader.readAsDataURL(blob);
       reader.onload = () => {
         // console.log("file to base64 result:" + reader.result);
@@ -145,6 +149,7 @@ export default {
             email: this.email,
             password: this.password,
             image: this.image,
+            role: this.role,
           }), //object containing data from vue from 2way data binding
           mode: "cors", //if FE and BE are on diffeent hosts/url
           headers: {
@@ -157,7 +162,7 @@ export default {
             console.log(json);
           });
       };
-      
+
       reader.onerror = function (error) {
         console.log("Error: ", error);
       };
