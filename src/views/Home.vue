@@ -225,6 +225,7 @@ export default {
 
 .blog-title {
   font-size: 19px;
+  margin-bottom: 15px; 
 }
 
 .blog-poster {
@@ -233,6 +234,7 @@ export default {
 
 .blog-text {
   font-size: 12px;
+  margin-top: 15px; 
 }
 
 .blog-data {
