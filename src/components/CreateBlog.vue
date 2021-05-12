@@ -32,7 +32,7 @@
 export default {
   data() {
     return {
-      blogTitle: "null",
+      blogTitle: null,
       blogText: null,
       userid: "2",
       blogTopic: "misc",
@@ -66,13 +66,14 @@ export default {
     },
     createBlog() {
       const url = "http://localhost:3000/blogs";
+      console.log(this.blogTitle, this.blogText, this.image);
       fetch(url, {
         method: "POST", //get post put delete, default GET
         body: JSON.stringify({
-          blog_title: this.blogTitle,
           blog_content: this.blogText,
+          blog_title: this.blogTitle,
           blog_topic: this.blogTopic,
-          image: this.image,
+          // image: this.image,
           user_id: this.userid,
         }), //object containing data from vue from 2way data binding
         mode: "cors", //if FE and BE are on diffeent hosts/url
