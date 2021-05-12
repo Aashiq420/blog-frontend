@@ -1,8 +1,20 @@
 <template>
   <div class="q-pa-md addUser-form">
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-      <q-input class="input" filled v-model="blogTitle" label="Blog Title" lazy-rules />
-      <q-input class="input" filled type="textarea" v-model="blogText" lazy-rules />
+      <q-input
+        class="input"
+        filled
+        v-model="blogTitle"
+        label="Blog Title"
+        lazy-rules
+      />
+      <q-input
+        class="input"
+        filled
+        type="textarea"
+        v-model="blogText"
+        lazy-rules
+      />
       <q-file
         v-model="image"
         filled
@@ -15,7 +27,7 @@
       <div>
         <q-btn label="Post" type="submit" color="primary" @click="createBlog" />
         <q-btn
-          :icon="'fas fa-redo-alt'"
+          icon="fas fa-redo-alt"
           type="reset"
           color="primary"
           flat
@@ -30,7 +42,7 @@
 export default {
   data() {
     return {
-      blogTitle: "null",
+      blogTitle: null,
       blogText: null,
       userid: "2",
       blogTopic: "misc",
@@ -89,18 +101,13 @@ export default {
 </script>
 
 <style>
-
-.addUser-form{
+.addUser-form {
   width: 100%;
   box-sizing: border-box;
 }
 
 .input {
   box-sizing: border-box;
-  padding-right: -20px
+  padding-right: -20px;
 }
-
-
-
 </style>
-

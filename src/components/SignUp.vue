@@ -43,7 +43,6 @@
             />
 
             <q-file
-              style="max-width: 300px"
               v-model="image"
               filled
               label="Click here to select image"

@@ -3,9 +3,12 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="user-card">
+          <div class="thumbnail">
+            <img class="blog-img" :src='usersBlogs[0].image'/>
+          </div>
           <h4>@{{ usersBlogs[0].username }}</h4>
 
-          <h5>Joined: {{ date }}</h5>
+          <h5>Joined: {{ currentDateTime() }}</h5>
         </div>
       </div>
       <div class="col-sm-6">
@@ -109,8 +112,6 @@ AOS.init({
   duration: 1200,
 });
 
-
-
 import moment from "moment";
 import AOS from "aos";
 import CreateBlog from "../components/CreateBlog";
@@ -133,6 +134,46 @@ export default {
     this.handleGetUserBlogs();
   },
   methods: {
+    currentDateTime() {
+      const url = "http://localhost:3000/blogs-of-user/2";
+      fetch(url, {
+        //method: "GET", //get post put delete, default GET
+        //body: JSON.stringify(), //object containing data from vue from 2way data binding
+        mode: "cors", //if FE and BE are on diffeent hosts/url
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          //API response gets returned
+          //console.log(json)
+          this.usersBlogs = json;
+          //  console.log(this.usersBlogs[0].date_started);
+          
+        });
+        return moment(String(this.usersBlogs[0].date_started)).format("MMMM Do YYYY");
+    },
+        getImage() {
+      const url = "http://localhost:3000/blogs-of-user/2";
+      fetch(url, {
+        //method: "GET", //get post put delete, default GET
+        //body: JSON.stringify(), //object containing data from vue from 2way data binding
+        mode: "cors", //if FE and BE are on diffeent hosts/url
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          //API response gets returned
+          //console.log(json)
+          this.usersBlogs = json;
+          //  console.log(this.usersBlogs[0].date_started);
+          
+        });
+        return (this.usersBlogs[0].image)
+    },
     onRejected(rejectedEntries) {
       // Notify plugin needs to be installed
       // https://quasar.dev/quasar-plugins/notify#Installation
@@ -157,7 +198,9 @@ export default {
           //API response gets returned
           //console.log(json)
           this.usersBlogs = json;
+          console.log();
         });
+      // return (String(this.usersBlogs[0].image))
     },
 
     toggleEdit() {
