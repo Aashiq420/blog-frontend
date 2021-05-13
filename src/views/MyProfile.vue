@@ -209,6 +209,12 @@ export default {
     toggleCreate() {
       (this.create = true), (this.edit = false);
     },
+    handleLoggedUser() {
+      const loggedUser = localStorage.getItem("loggedUser");
+      const token = localStorage.getItem("token");
+      if (loggedUser && token) {
+      }
+    },
   },
 };
 </script>

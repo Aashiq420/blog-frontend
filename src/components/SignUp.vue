@@ -112,7 +112,7 @@ export default {
       } else {
         alert("submitted");
         if (confirm) {
-          // window.location.href='http://localhost:8080/myprofile'
+          window.location.href = "http://localhost:8080/myprofile";
         }
         this.$q.notify({
           color: "green-4",
@@ -133,8 +133,7 @@ export default {
       const blob = new Blob([this.image], { type: "image" });
       const reader = new FileReader();
 
-      console.log(this.username, this.email, this.password,
-      this.role)
+      console.log(this.username, this.email, this.password, this.role);
 
       reader.readAsDataURL(blob);
       reader.onload = () => {
