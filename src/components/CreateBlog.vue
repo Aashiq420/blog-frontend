@@ -1,85 +1,113 @@
 <template>
-  <div class="q-pa-md" style="width: 400px">
-    <q-form
-      @submit="onSubmit"
-      @reset="onReset"
-      class="q-gutter-md "
-    >
+  <div class="q-pa-md addUser-form">
+    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <q-input
+        class="input"
         filled
-        v-model="title"
+        v-model="blogTitle"
         label="Blog Title"
-        
         lazy-rules
       />
-
       <q-input
+        class="input"
         filled
         type="textarea"
-        v-model="text"
-      
+        v-model="blogText"
         lazy-rules
-        
       />
-       <q-file
-        style="max-width:inherit"
-        v-model="filesImages"
+      <q-file
+        v-model="image"
         filled
-        
         label="Add Image"
         multiple
-        accept=".jpg, image/*"
+        accept=".jpg, .png, image/*"
+        max-file-size="1000000"
         @rejected="onRejected"
       />
-
       <div>
-        <q-btn label="Post" type="submit" color="primary"/>
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+        <q-btn label="Post" type="submit" color="primary" @click="createBlog" />
+        <q-btn
+          icon="fas fa-redo-alt"
+          type="reset"
+          color="primary"
+          flat
+          class="q-ml-sm"
+        />
       </div>
     </q-form>
-
   </div>
 </template>
 
 <script>
-
 export default {
-  data () {
+  data() {
     return {
-      text: null,
-      text: null,
-
-    }
+      blogTitle: null,
+      blogText: null,
+      userid: "2",
+      blogTopic: "misc",
+      image: null,
+    };
   },
 
   methods: {
-    onSubmit () {
+    onSubmit() {
       if (this.accept !== true) {
-        this.$q.notify({
-          color: 'red-5',
-          textColor: 'white',
-          icon: 'warning',
-        })
-      }
-      else {
-        this.$q.notify({
-          color: 'green-4',
-          textColor: 'white',
-          icon: 'cloud_done',
-          message: 'Submitted'
-        })
+        console.log("worked");
+        // this.$q.notify({
+        //   color: "red-5",
+        //   textColor: "white",
+        //   icon: "warning",
+        // });
+      } else {
+        console.log("error");
+        // this.$q.notify({
+        //   color: "green-4",
+        //   textColor: "white",
+        //   icon: "cloud_done",
+        //   message: "Submitted",
+        // });
       }
     },
 
-    onReset () {
-      this.tile = null
-      this.text = null
-    }
-  }
-}
+    onReset() {
+      this.tile = null;
+      this.text = null;
+    },
+    createBlog() {
+      const url = "http://localhost:3000/blogs";
+      fetch(url, {
+        method: "POST", //get post put delete, default GET
+        body: JSON.stringify({
+          blog_title: this.blogTitle,
+          blog_content: this.blogText,
+          blog_topic: this.blogTopic,
+          image: this.image,
+          user_id: this.userid,
+        }), //object containing data from vue from 2way data binding
+        mode: "cors", //if FE and BE are on diffeent hosts/url
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          //API response gets returned
+          console.log(json);
+        });
+    },
+  },
+};
 </script>
 
 <style>
+.addUser-form {
+  width: 100%;
+  box-sizing: border-box;
+}
 
+.input {
+  box-sizing: border-box;
+  padding-right: -20px;
+}
 </style>
-
