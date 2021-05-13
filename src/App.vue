@@ -2,6 +2,7 @@
   <q-layout view="hHr LpR fFf">
     <q-header elevated class="bg-primary text-white" height-hint="98">
       <q-toolbar>
+        <q-btn dense flat round icon="menu" @click="left = !left" />
         <i class="fas fa-feather-alt"></i>
         <q-toolbar-title> Blog Haven </q-toolbar-title>
         <q-tabs align="left">
@@ -16,6 +17,23 @@
         </q-tabs>
       </q-toolbar>
     </q-header>
+
+    <q-drawer v-model="left" side="left" overlay elevated>
+      <q-toolbar-title>
+        <i class="fas fa-feather-alt"></i>
+        Blog Haven
+      </q-toolbar-title>
+      <!-- drawer content -->
+      <div class="q-pa-md" style="max-width: 350px">
+        <q-list bordered separator>
+          <q-item clickable v-ripple>
+            <q-item-section
+              ><sign-up><SignUp /></sign-up
+            ></q-item-section>
+          </q-item>
+        </q-list>
+      </div>
+    </q-drawer>
 
     <!-- <q-drawer v-model="left" side="left" overlay elevated>
 
@@ -74,6 +92,23 @@ export default {
 </script>
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Original+Surfer&display=swap");
+
+* {
+  font-family: "Original Surfer", cursive;
+}
+
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.col-sm-6 {
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
+}
 
 * {
   font-family: "Original Surfer", cursive;

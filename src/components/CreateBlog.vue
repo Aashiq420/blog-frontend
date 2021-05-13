@@ -1,10 +1,21 @@
 <template>
-  <div class="q-pa-md" style="width: 400px">
+  <div class="q-pa-md addUser-form">
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-      <q-input filled v-model="blogTitle" label="Blog Title" lazy-rules />
-      <q-input filled type="textarea" v-model="blogText" lazy-rules />
+      <q-input
+        class="input"
+        filled
+        v-model="blogTitle"
+        label="Blog Title"
+        lazy-rules
+      />
+      <q-input
+        class="input"
+        filled
+        type="textarea"
+        v-model="blogText"
+        lazy-rules
+      />
       <q-file
-        style="max-width: inherit"
         v-model="image"
         filled
         label="Add Image"
@@ -13,11 +24,10 @@
         max-file-size="1000000"
         @rejected="onRejected"
       />
-
       <div>
         <q-btn label="Post" type="submit" color="primary" @click="createBlog" />
         <q-btn
-          :icon="'fas fa-redo-alt'"
+          icon="fas fa-redo-alt"
           type="reset"
           color="primary"
           flat
@@ -92,5 +102,13 @@ export default {
 </script>
 
 <style>
-</style>
+.addUser-form {
+  width: 100%;
+  box-sizing: border-box;
+}
 
+.input {
+  box-sizing: border-box;
+  padding-right: -20px;
+}
+</style>

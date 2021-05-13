@@ -2,7 +2,7 @@
   <q-btn label="Register" color="primary" @click="large = true" />
   <q-dialog v-model="large">
     <q-card
-      style="width: -webkit-fill-available; height: -webkit-fill-available"
+      style="width: 400px ;height: 650px"
     >
       <q-card-section>
         <div class="text-h6">Register</div>
@@ -43,7 +43,6 @@
             />
 
             <q-file
-              style="max-width: 300px"
               v-model="image"
               filled
               label="Click here to select image"
