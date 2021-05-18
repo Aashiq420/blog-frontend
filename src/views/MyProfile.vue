@@ -4,11 +4,11 @@
       <div class="col-sm-6">
         <div class="user-card">
           <div class="thumbnail">
-            <img class="blog-img" :src='usersBlogs[0].image'/>
+            <img class="blog-img" :src="usersBlogs[0].image" />
           </div>
           <h4>@{{ usersBlogs[0].username }}</h4>
 
-          <h5>Joined: {{ currentDateTime() }}</h5>
+          <h5>Joined: {{ getUserDate(usersBlogs[0].username) }}</h5>
         </div>
       </div>
       <div class="col-sm-6">
@@ -23,10 +23,6 @@
             @click="toggleCreate"
             class="add-btn"
           />
-          <!-- <q-btn-group push>
-            <q-btn push icon="fas fa-edit" @click="toggleEdit" />
-            <q-btn push icon="fas fa-trash-alt" />
-          </q-btn-group> -->
           <CreateBlog v-if="create" />
           <EditPost v-if="edit" />
         </div>
@@ -39,21 +35,20 @@
         <q-item v-for="usersBlog in usersBlogs" :key="usersBlog.id">
           <div class="blog-card" data-aos="zoom-in">
             <div class="thumbnail">
-              <img
-                class="blog-img"
-                src="https://cdn.quasar.dev/img/mountains.jpg"
-              />
+              <img class="blog-img" :src="usersBlog.blog_image" />
             </div>
             <div class="blog-data">
               <q-item-section top>
                 <q-item-label lines="1">
-                  <span class="text-weight-large blog-title">{{
-                    usersBlog.blog_title
-                  }}</span
+                  <span class="text-weight-large blog-title"
+                    >{{ usersBlog.blog_title }} </span
                   ><br />
                   <span class="text-grey-8 blog-poster">
-                    by {{ usersBlog.username }}</span
-                  ><br />
+                    by {{ usersBlog.username }} --
+                    {{ getBlogDate(usersBlog.date_blogCreated) }}
+                  </span>
+                  <!-- · {{ blogMade() }} -->
+                  <br />
                   <span class="text-grey-8 blog-topic">
                     topic: {{ usersBlog.blog_topic }}</span
                   >
@@ -134,46 +129,51 @@ export default {
     this.handleGetUserBlogs();
   },
   methods: {
-    currentDateTime() {
-      const url = "http://localhost:3000/blogs-of-user/2";
-      fetch(url, {
-        //method: "GET", //get post put delete, default GET
-        //body: JSON.stringify(), //object containing data from vue from 2way data binding
-        mode: "cors", //if FE and BE are on diffeent hosts/url
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          //API response gets returned
-          //console.log(json)
-          this.usersBlogs = json;
-          //  console.log(this.usersBlogs[0].date_started);
-          
-        });
-        return moment(String(this.usersBlogs[0].date_started)).format("MMMM Do YYYY");
+    // createdTime() {
+    //   const url = "http://localhost:3000/blogs-of-user/2";
+    //   fetch(url, {
+    //     //method: "GET", //get post put delete, default GET
+    //     //body: JSON.stringify(), //object containing data from vue from 2way data binding
+    //     mode: "cors", //if FE and BE are on diffeent hosts/url
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //     .then((response) => response.json())
+    //     .then((json) => {
+    //       //API response gets returned
+    //       this.usersBlogs = json;
+    //     });
+    //   return moment(String(this.usersBlogs[0].date_started)).format(
+    //     "MMMM Do YYYY"
+    //   );
+    // },
+    getBlogDate: function (date) {
+      return moment(date, "YYYY-MM-DD").format("DD/MM/YYYY");
     },
-        getImage() {
-      const url = "http://localhost:3000/blogs-of-user/2";
-      fetch(url, {
-        //method: "GET", //get post put delete, default GET
-        //body: JSON.stringify(), //object containing data from vue from 2way data binding
-        mode: "cors", //if FE and BE are on diffeent hosts/url
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          //API response gets returned
-          //console.log(json)
-          this.usersBlogs = json;
-          //  console.log(this.usersBlogs[0].date_started);
-          
-        });
-        return (this.usersBlogs[0].image)
+    
+    getUserDate: function (date) {
+      return moment(date, "YYYY-MM-DD").format("DD/MM/YYYY");
     },
+    // blogMade() {
+    //   const url = "http://localhost:3000/blogs-of-user/2";
+    //   fetch(url, {
+    //     //method: "GET", //get post put delete, default GET
+    //     //body: JSON.stringify(), //object containing data from vue from 2way data binding
+    //     mode: "cors", //if FE and BE are on diffeent hosts/url
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //     .then((response) => response.json())
+    //     .then((json) => {
+    //       //API response gets returned
+    //       this.usersBlogs = json;
+    //     });
+    //   return moment(String(this.usersBlogs[0].date_blogCreated)).format(
+    //     "MMMM Do YYYY"
+    //   );
+    // },
     onRejected(rejectedEntries) {
       // Notify plugin needs to be installed
       // https://quasar.dev/quasar-plugins/notify#Installation
@@ -182,7 +182,6 @@ export default {
         message: `${rejectedEntries.length} file(s) did not pass validation constraints`,
       });
     },
-
     handleGetUserBlogs() {
       const url = "http://localhost:3000/blogs-of-user/2";
       fetch(url, {
@@ -198,9 +197,8 @@ export default {
           //API response gets returned
           //console.log(json)
           this.usersBlogs = json;
-          console.log();
+          console.log(usersBlogs.date_blogCreated);
         });
-      // return (String(this.usersBlogs[0].image))
     },
 
     toggleEdit() {

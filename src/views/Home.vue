@@ -64,7 +64,7 @@
             <div class="thumbnail">
               <img
                 class="blog-img"
-                src="https://cdn.quasar.dev/img/mountains.jpg"
+                :src="blog.blog_image"
               />
             </div>
             <div class="blog-data">

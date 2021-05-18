@@ -8,6 +8,7 @@
         label="Blog Title"
         lazy-rules
       />
+      <q-select filled v-model="blogTopic" label="Topic" :options="options" />
       <q-input
         class="input"
         filled
@@ -16,14 +17,16 @@
         lazy-rules
       />
       <q-file
-        v-model="image"
+        v-model="blog_image"
         filled
-        label="Add Image"
-        multiple
+        label="Click here to select image"
         accept=".jpg, .png, image/*"
-        max-file-size="1000000"
         @rejected="onRejected"
-      />
+      >
+        <template v-slot:prepend>
+          <q-icon name="cloud_upload" />
+        </template>
+      </q-file>
       <div>
         <q-btn label="Post" type="submit" color="primary" @click="createBlog" />
         <q-btn
@@ -45,8 +48,18 @@ export default {
       blogTitle: null,
       blogText: null,
       userid: "2",
-      blogTopic: "misc",
-      image: null,
+      blogTopic: null,
+      blog_image: null,
+      options: [
+        "Fashion",
+        "Food",
+        "Travel",
+        "Music",
+        "Lifestyle",
+        "Sports",
+        "Politcs",
+        "Miscellaneous",
+      ],
     };
   },
 
@@ -75,26 +88,37 @@ export default {
       this.text = null;
     },
     createBlog() {
-      const url = "http://localhost:3000/blogs";
-      fetch(url, {
-        method: "POST", //get post put delete, default GET
-        body: JSON.stringify({
-          blog_title: this.blogTitle,
-          blog_content: this.blogText,
-          blog_topic: this.blogTopic,
-          image: this.image,
-          user_id: this.userid,
-        }), //object containing data from vue from 2way data binding
-        mode: "cors", //if FE and BE are on diffeent hosts/url
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          //API response gets returned
-          console.log(json);
-        });
+      const blob = new Blob([this.blog_image ], { type: "image" });
+      const reader = new FileReader();
+
+      reader.readAsDataURL(blob);
+      reader.onload = () => {
+        // console.log("file to base64 result:" + reader.result);
+        this.blog_image = reader.result;
+        const url = "http://localhost:3000/blogs";
+        fetch(url, {
+          method: "POST", //get post put delete, default GET
+          body: JSON.stringify({
+            blog_title: this.blogTitle,
+            blog_content: this.blogText,
+            blog_topic: this.blogTopic,
+            blog_image: this.blog_image,
+            user_id: this.userid,
+          }), //object containing data from vue from 2way data binding
+          mode: "cors", //if FE and BE are on diffeent hosts/url
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((response) => response.json());
+        // .then((json) => {
+        //   //API response gets returned
+        //   console.log(json);
+        //   console.log(this.blog_image);
+        // });
+      };
+      reader.onerror = function (error) {
+        console.log("Error: ", error);
+      };
     },
   },
 };
@@ -108,6 +132,7 @@ export default {
 
 .input {
   box-sizing: border-box;
-  padding-right: -20px;
 }
 </style>
+
+
