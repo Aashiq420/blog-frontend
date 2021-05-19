@@ -217,10 +217,12 @@ export default {
 }
 
 .blog-card {
+  margin-bottom: 1vh;
   background-color: rgba(14, 125, 252, 0.2);
   border-radius: 5px;
   padding: 15px;
   display: flex;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 22px 70px 4px;
 }
 
 .blog-title {

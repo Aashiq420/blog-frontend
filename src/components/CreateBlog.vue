@@ -1,6 +1,11 @@
 <template>
   <div class="q-pa-md addUser-form">
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+      <div class="thumbnail">
+        <img class="blog-img" :src="blog_image" />
+       {{ blog_image 
+       }}
+      </div>
       <q-input
         class="input"
         filled
@@ -88,7 +93,7 @@ export default {
       this.text = null;
     },
     createBlog() {
-      const blob = new Blob([this.blog_image ], { type: "image" });
+      const blob = new Blob([this.blog_image], { type: "image" });
       const reader = new FileReader();
 
       reader.readAsDataURL(blob);

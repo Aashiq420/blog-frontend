@@ -8,7 +8,7 @@
           </div>
           <h4>@{{ usersBlogs[0].username }}</h4>
 
-          <h5>Joined: {{ getUserDate(usersBlogs[0].username) }}</h5>
+          <h5>Joined: {{ getUserDate(usersBlogs[0].date_started) }}</h5>
         </div>
       </div>
       <div class="col-sm-6">
@@ -44,7 +44,7 @@
                     >{{ usersBlog.blog_title }} </span
                   ><br />
                   <span class="text-grey-8 blog-poster">
-                    by {{ usersBlog.username }} --
+                    by {{ usersBlog.username }} ·
                     {{ getBlogDate(usersBlog.date_blogCreated) }}
                   </span>
                   <!-- · {{ blogMade() }} -->
@@ -122,58 +122,19 @@ export default {
       create: true,
       edit: false,
       filesImages: null,
-      usersBlogs: [],
+      usersBlogs: [''],
     };
   },
   created() {
     this.handleGetUserBlogs();
   },
   methods: {
-    // createdTime() {
-    //   const url = "http://localhost:3000/blogs-of-user/2";
-    //   fetch(url, {
-    //     //method: "GET", //get post put delete, default GET
-    //     //body: JSON.stringify(), //object containing data from vue from 2way data binding
-    //     mode: "cors", //if FE and BE are on diffeent hosts/url
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   })
-    //     .then((response) => response.json())
-    //     .then((json) => {
-    //       //API response gets returned
-    //       this.usersBlogs = json;
-    //     });
-    //   return moment(String(this.usersBlogs[0].date_started)).format(
-    //     "MMMM Do YYYY"
-    //   );
-    // },
-    getBlogDate: function (date) {
-      return moment(date, "YYYY-MM-DD").format("DD/MM/YYYY");
-    },
-    
     getUserDate: function (date) {
-      return moment(date, "YYYY-MM-DD").format("DD/MM/YYYY");
+      return moment(date, "YYYY-MM-DD").format('MMMM Do YYYY');
     },
-    // blogMade() {
-    //   const url = "http://localhost:3000/blogs-of-user/2";
-    //   fetch(url, {
-    //     //method: "GET", //get post put delete, default GET
-    //     //body: JSON.stringify(), //object containing data from vue from 2way data binding
-    //     mode: "cors", //if FE and BE are on diffeent hosts/url
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   })
-    //     .then((response) => response.json())
-    //     .then((json) => {
-    //       //API response gets returned
-    //       this.usersBlogs = json;
-    //     });
-    //   return moment(String(this.usersBlogs[0].date_blogCreated)).format(
-    //     "MMMM Do YYYY"
-    //   );
-    // },
+    getBlogDate: function (date2) {
+      return moment(date2).startOf('hour').fromNow();
+    },
     onRejected(rejectedEntries) {
       // Notify plugin needs to be installed
       // https://quasar.dev/quasar-plugins/notify#Installation
@@ -197,7 +158,6 @@ export default {
           //API response gets returned
           //console.log(json)
           this.usersBlogs = json;
-          console.log(usersBlogs.date_blogCreated);
         });
     },
 
@@ -221,8 +181,19 @@ export default {
   height: 100%;
   margin-top: 20px;
   padding: 15px;
+  text-align: center;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
     rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.thumbnail{
+  margin: auto;
+  text-align: center;
+  
+}
+
+.user-card img{
+border-radius: 50%;
 }
 
 .add-btn {
