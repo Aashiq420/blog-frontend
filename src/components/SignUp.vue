@@ -65,7 +65,7 @@
                 color="primary"
               />
               <q-btn
-                :icon="'fas fa-redo-alt'"
+                icon="fas fa-redo-alt"
                 type="reset"
                 color="primary"
                 flat

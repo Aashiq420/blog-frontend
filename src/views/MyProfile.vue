@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <DeleteBlog v-if="inception" />
     <div class="row">
       <div class="col-sm-6">
         <div class="user-card">
@@ -24,7 +25,7 @@
             class="add-btn"
           />
           <CreateBlog v-if="create" />
-          <EditPost v-if="edit" />
+          <EditBlog v-if="edit" />
         </div>
       </div>
     </div>
@@ -90,7 +91,7 @@
 
                   <div class="btn-holder">
                     <q-btn push icon="fas fa-edit" @click="toggleEdit" />
-                    <q-btn push icon="fas fa-trash-alt" />
+                    <q-btn push icon="fas fa-trash-alt" @click="toggleDelete" />
                   </div>
                 </q-item-label>
               </q-item-section>
@@ -110,19 +111,22 @@ AOS.init({
 import moment from "moment";
 import AOS from "aos";
 import CreateBlog from "../components/CreateBlog";
-import EditPost from "../components/EditBlog";
+import EditBlog from "../components/EditBlog";
+import DeleteBlog from "../components/DeleteBlog";
 
 export default {
   components: {
     CreateBlog,
-    EditPost,
+    EditBlog,
+    DeleteBlog,
   },
   data() {
     return {
       create: true,
       edit: false,
+      // inception: false,
       filesImages: null,
-      usersBlogs: [''],
+      usersBlogs: [""],
     };
   },
   created() {
@@ -130,10 +134,10 @@ export default {
   },
   methods: {
     getUserDate: function (date) {
-      return moment(date, "YYYY-MM-DD").format('MMMM Do YYYY');
+      return moment(date, "YYYY-MM-DD").format("MMMM Do YYYY");
     },
     getBlogDate: function (date2) {
-      return moment(date2).startOf('hour').fromNow();
+      return moment(date2).startOf("hour").fromNow();
     },
     onRejected(rejectedEntries) {
       // Notify plugin needs to be installed
@@ -162,10 +166,13 @@ export default {
     },
 
     toggleEdit() {
-      (this.create = false), (this.edit = true);
+      (this.create = false), (this.edit = true), (this.inception = false);
     },
     toggleCreate() {
-      (this.create = true), (this.edit = false);
+      (this.create = true), (this.edit = false), (this.inception = false);
+    },
+    toggleDelete() {
+      (this.inception = true), (this.create = true), (this.edit = false);
     },
   },
 };
@@ -186,14 +193,13 @@ export default {
     rgba(17, 17, 26, 0.05) 0px 8px 32px;
 }
 
-.thumbnail{
+.thumbnail {
   margin: auto;
   text-align: center;
-  
 }
 
-.user-card img{
-border-radius: 50%;
+.user-card img {
+  border-radius: 50%;
 }
 
 .add-btn {

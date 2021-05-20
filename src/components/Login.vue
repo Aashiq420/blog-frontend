@@ -6,7 +6,7 @@
         <q-card-section>
           <div class="formhead">
             <div class="text-h6">Login</div>
-            <q-btn flat :icon="'fas fa-times'" v-close-popup />
+            <q-btn flat icon="fas fa-times" v-close-popup />
           </div>
         </q-card-section>
 
@@ -74,7 +74,6 @@ export default {
     return {
       email: null,
       password: null,
-
       medium: false,
     };
   },
