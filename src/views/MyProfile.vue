@@ -174,6 +174,12 @@ export default {
     toggleDelete() {
       (this.inception = true), (this.create = true), (this.edit = false);
     },
+    handleLoggedUser() {
+      const loggedUser = localStorage.getItem("loggedUser");
+      const token = localStorage.getItem("token");
+      if (loggedUser && token) {
+      }
+    },
   },
 };
 </script>
