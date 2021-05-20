@@ -1,14 +1,15 @@
 <template>
   <div class="container">
+    <DeleteBlog v-if="inception" />
     <div class="row">
       <div class="col-sm-6">
         <div class="user-card">
           <div class="thumbnail">
-            <img class="blog-img" :src='usersBlogs[0].image'/>
+            <img class="blog-img" :src="usersBlogs[0].image" />
           </div>
           <h4>@{{ usersBlogs[0].username }}</h4>
 
-          <h5>Joined: {{ currentDateTime() }}</h5>
+          <h5>Joined: {{ getUserDate(usersBlogs[0].date_started) }}</h5>
         </div>
       </div>
       <div class="col-sm-6">
@@ -23,12 +24,8 @@
             @click="toggleCreate"
             class="add-btn"
           />
-          <!-- <q-btn-group push>
-            <q-btn push icon="fas fa-edit" @click="toggleEdit" />
-            <q-btn push icon="fas fa-trash-alt" />
-          </q-btn-group> -->
           <CreateBlog v-if="create" />
-          <EditPost v-if="edit" />
+          <EditBlog v-if="edit" />
         </div>
       </div>
     </div>
@@ -39,21 +36,20 @@
         <q-item v-for="usersBlog in usersBlogs" :key="usersBlog.id">
           <div class="blog-card" data-aos="zoom-in">
             <div class="thumbnail">
-              <img
-                class="blog-img"
-                src="https://cdn.quasar.dev/img/mountains.jpg"
-              />
+              <img class="blog-img" :src="usersBlog.blog_image" />
             </div>
             <div class="blog-data">
               <q-item-section top>
                 <q-item-label lines="1">
-                  <span class="text-weight-large blog-title">{{
-                    usersBlog.blog_title
-                  }}</span
+                  <span class="text-weight-large blog-title"
+                    >{{ usersBlog.blog_title }} </span
                   ><br />
                   <span class="text-grey-8 blog-poster">
-                    by {{ usersBlog.username }}</span
-                  ><br />
+                    by {{ usersBlog.username }} ·
+                    {{ getBlogDate(usersBlog.date_blogCreated) }}
+                  </span>
+                  <!-- · {{ blogMade() }} -->
+                  <br />
                   <span class="text-grey-8 blog-topic">
                     topic: {{ usersBlog.blog_topic }}</span
                   >
@@ -95,7 +91,7 @@
 
                   <div class="btn-holder">
                     <q-btn push icon="fas fa-edit" @click="toggleEdit" />
-                    <q-btn push icon="fas fa-trash-alt" />
+                    <q-btn push icon="fas fa-trash-alt" @click="toggleDelete" />
                   </div>
                 </q-item-label>
               </q-item-section>
@@ -115,64 +111,33 @@ AOS.init({
 import moment from "moment";
 import AOS from "aos";
 import CreateBlog from "../components/CreateBlog";
-import EditPost from "../components/EditBlog";
+import EditBlog from "../components/EditBlog";
+import DeleteBlog from "../components/DeleteBlog";
 
 export default {
   components: {
     CreateBlog,
-    EditPost,
+    EditBlog,
+    DeleteBlog,
   },
   data() {
     return {
       create: true,
       edit: false,
+      // inception: false,
       filesImages: null,
-      usersBlogs: [],
+      usersBlogs: [""],
     };
   },
   created() {
     this.handleGetUserBlogs();
   },
   methods: {
-    currentDateTime() {
-      const url = "http://localhost:3000/blogs-of-user/2";
-      fetch(url, {
-        //method: "GET", //get post put delete, default GET
-        //body: JSON.stringify(), //object containing data from vue from 2way data binding
-        mode: "cors", //if FE and BE are on diffeent hosts/url
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          //API response gets returned
-          //console.log(json)
-          this.usersBlogs = json;
-          //  console.log(this.usersBlogs[0].date_started);
-          
-        });
-        return moment(String(this.usersBlogs[0].date_started)).format("MMMM Do YYYY");
+    getUserDate: function (date) {
+      return moment(date, "YYYY-MM-DD").format("MMMM Do YYYY");
     },
-        getImage() {
-      const url = "http://localhost:3000/blogs-of-user/2";
-      fetch(url, {
-        //method: "GET", //get post put delete, default GET
-        //body: JSON.stringify(), //object containing data from vue from 2way data binding
-        mode: "cors", //if FE and BE are on diffeent hosts/url
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          //API response gets returned
-          //console.log(json)
-          this.usersBlogs = json;
-          //  console.log(this.usersBlogs[0].date_started);
-          
-        });
-        return (this.usersBlogs[0].image)
+    getBlogDate: function (date2) {
+      return moment(date2).startOf("hour").fromNow();
     },
     onRejected(rejectedEntries) {
       // Notify plugin needs to be installed
@@ -182,7 +147,6 @@ export default {
         message: `${rejectedEntries.length} file(s) did not pass validation constraints`,
       });
     },
-
     handleGetUserBlogs() {
       const url = "http://localhost:3000/blogs-of-user/2";
       fetch(url, {
@@ -198,16 +162,17 @@ export default {
           //API response gets returned
           //console.log(json)
           this.usersBlogs = json;
-          console.log();
         });
-      // return (String(this.usersBlogs[0].image))
     },
 
     toggleEdit() {
-      (this.create = false), (this.edit = true);
+      (this.create = false), (this.edit = true), (this.inception = false);
     },
     toggleCreate() {
-      (this.create = true), (this.edit = false);
+      (this.create = true), (this.edit = false), (this.inception = false);
+    },
+    toggleDelete() {
+      (this.inception = true), (this.create = true), (this.edit = false);
     },
     handleLoggedUser() {
       const loggedUser = localStorage.getItem("loggedUser");
@@ -229,8 +194,18 @@ export default {
   height: 100%;
   margin-top: 20px;
   padding: 15px;
+  text-align: center;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
     rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.thumbnail {
+  margin: auto;
+  text-align: center;
+}
+
+.user-card img {
+  border-radius: 50%;
 }
 
 .add-btn {
