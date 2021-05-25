@@ -8,7 +8,6 @@
             <img class="blog-img" :src="usersBlogs[0].image" />
           </div>
           <h4>@{{ usersBlogs[0].username }}</h4>
-
           <h5>Joined: {{ getUserDate(usersBlogs[0].date_started) }}</h5>
         </div>
       </div>
@@ -57,21 +56,8 @@
                 <q-separator />
                 <br />
                 <q-item-label caption lines="3">
-                  <p class="blog-text">
-                    <!-- {{ usersBlog.blog_content}} -->
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Facere sit ipsa saepe fugit magnam, optio repellendus vitae
-                    minima rerum accusantium facilis delectus dolorum.
-                    Consequatur officia minus nulla numquam, adipisci, porro
-                    error culpa ullam aliquid unde consequuntur reprehenderit ab
-                    eius, amet perferendis quaerat repellendus necessitatibus
-                    rerum? Iure tempora in, nobis ipsam nulla at. Blanditiis
-                    dicta placeat maxime dolore aliquam officia, impedit tempora
-                    quidem ea, illum quas fuga voluptatem cum eos eius magni
-                    laudantium omnis corrupti, facilis deleniti! Rerum quae
-                    voluptas harum sit ad aliquid consequatur est deserunt iure,
-                    voluptatum accusantium dignissimos quis quo itaque earum
-                    aspernatur delectus atque! Odit, atque non.
+                  <p class="blog-text ellipsis">
+                    {{ usersBlog.blog_content}}
                   </p>
                 </q-item-label>
                 <q-item-label
@@ -98,6 +84,7 @@
             </div>
           </div>
         </q-item>
+
       </div>
     </div>
   </div>
@@ -127,6 +114,7 @@ export default {
       // inception: false,
       filesImages: null,
       usersBlogs: [""],
+      userid: null,
     };
   },
   created() {
@@ -148,7 +136,10 @@ export default {
       });
     },
     handleGetUserBlogs() {
-      const url = "http://localhost:3000/blogs-of-user/2";
+      this.userid = localStorage.getItem('id')
+      console.log(this.userid)
+      
+      const url = `http://localhost:3000/blogs-of-user/${this.userid}`;
       fetch(url, {
         //method: "GET", //get post put delete, default GET
         //body: JSON.stringify(), //object containing data from vue from 2way data binding
@@ -200,6 +191,7 @@ export default {
 }
 
 .thumbnail {
+  width: 30%;
   margin: auto;
   text-align: center;
 }
@@ -232,5 +224,11 @@ export default {
 
 .blog-topic {
   margin-bottom: 15px;
+}
+.blog-data {
+  width: 70%;
+}
+.blog-card{
+  width: 100%;
 }
 </style>

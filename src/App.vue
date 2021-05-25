@@ -42,7 +42,7 @@ export default {
   },
   beforeMount() {
     this.user = localStorage.getItem("loggedUser")
-    console.log(this.user)
+    // console.log(this.user)
     if (this.user) {
       this.$store.commit('updateloggedOnStatus', true)
     }
@@ -55,7 +55,7 @@ export default {
       localStorage.removeItem('loggedUser')
       console.log('removed from localstorage')
       alert('User logged out successfully')
-      window.location.reload()
+      window.location.href = 'http://localhost:8080/'
     }
   },
   

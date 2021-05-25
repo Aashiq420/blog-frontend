@@ -142,6 +142,7 @@ export default {
       .then((json) => {
         console.log(json)//user logged in
         localStorage.setItem('loggedUser',JSON.stringify(json))
+        localStorage.setItem('id',JSON.stringify(json.id))
         this.$store.commit('updateloggedOnStatus', true)
         alert(`user ${this.email} is logged on`)
       })
