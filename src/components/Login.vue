@@ -6,7 +6,7 @@
         <q-card-section>
           <div class="formhead">
             <div class="text-h6">Login</div>
-            <q-btn flat :icon="'fas fa-times'" v-close-popup />
+            <q-btn flat icon="fas fa-times" v-close-popup />
           </div>
         </q-card-section>
 
@@ -74,7 +74,6 @@ export default {
     return {
       email: null,
       password: null,
-
       medium: false,
     };
   },
@@ -125,7 +124,7 @@ export default {
         .then((response) => response.json())
         .then((json) => {
           console.log(json);
-          console.log("login authentication passed");
+          localStorage.setItem("token", json);
           const url2 = "http://localhost:3000/users";
           fetch(url2, {
             mode: "cors", //if FE and BE are on diffeent hosts/url
@@ -139,6 +138,9 @@ export default {
                 return user.email === this.email;
               });
               console.log(user);
+              localStorage.setItem("loggedUser", user);
+              this.$store.state.loggedOn = true;
+              //window.location.href = "http://localhost:8080/";
             });
           //API response gets returned
           // console.log(users)

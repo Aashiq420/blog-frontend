@@ -2,15 +2,15 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    loggedOn:true,
+    loggedOn: true,
     signedUp: false,
-  
+
   },
   mutations: {
-    updateloggedOnStatus(state, loggedOnStatus){
+    updateloggedOnStatus(state, loggedOnStatus) {
       state.loggedOn = loggedOnStatus
     },
-    updatesignedUpStatus(state, signedUpStatus){
+    updatesignedUpStatus(state, signedUpStatus) {
       state.signedUp = signedUpStatus
     }
   },

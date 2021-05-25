@@ -2,7 +2,7 @@
   <q-btn label="Register" color="primary" @click="large = true" />
   <q-dialog v-model="large">
     <q-card
-      style="width: -webkit-fill-available; height: -webkit-fill-available"
+      style="width: 400px ;height: 650px"
     >
       <q-card-section>
         <div class="text-h6">Register</div>
@@ -43,7 +43,6 @@
             />
 
             <q-file
-              style="max-width: 300px"
               v-model="image"
               filled
               label="Click here to select image"
@@ -66,7 +65,7 @@
                 color="primary"
               />
               <q-btn
-                :icon="'fas fa-redo-alt'"
+                icon="fas fa-redo-alt"
                 type="reset"
                 color="primary"
                 flat
@@ -113,7 +112,7 @@ export default {
       } else {
         alert("submitted");
         if (confirm) {
-          // window.location.href='http://localhost:8080/myprofile'
+          window.location.href = "http://localhost:8080/myprofile";
         }
         this.$q.notify({
           color: "green-4",
@@ -134,8 +133,7 @@ export default {
       const blob = new Blob([this.image], { type: "image" });
       const reader = new FileReader();
 
-      console.log(this.username, this.email, this.password,
-      this.role)
+      console.log(this.username, this.email, this.password, this.role);
 
       reader.readAsDataURL(blob);
       reader.onload = () => {
