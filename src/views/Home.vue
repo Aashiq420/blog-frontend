@@ -1,5 +1,5 @@
 <template>
-  <div class="home container">
+  <div class="home_container" v-if="homeContainer">
     <h2 class="heading">Hot Topics</h2>
     <div class="car">
       <q-carousel
@@ -109,6 +109,7 @@ export default {
       autoplay: 5000,
       blogs: [""],
       users: [""],
+      homeContainer: true,
     };
   },
   created() {

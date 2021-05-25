@@ -7,30 +7,17 @@
         <q-tabs align="left">
           <q-route-tab to="/" :icon="'fas fa-users'" />
           <!-- <q-route-tab to="/signup" label="sign-up" /> -->
-          <q-route-tab to="/about" :icon="'fas fa-info-circle'" />
+          <q-route-tab to="/about" :icon="'fas fa-info-circle'" exact/>
           <!-- <q-route-tab to="/login" label="Login" /> -->
           <q-route-tab v-if="loggedOn" to="/myprofile" :icon="'fas fa-user'" />
-          <q-route-tab
-            ><login><Login /></login
-          ></q-route-tab>
+          <q-route-tab v-if="!loggedOn"><login><Login /></login></q-route-tab>
+          <q-route-tab v-else>
+            <q-btn color="primary" label="Sign Out" @click.prevent="handleSignout()" />
+          </q-route-tab>
         </q-tabs>
       </q-toolbar>
     </q-header>
 
-    <!-- <q-drawer v-model="left" side="left" overlay elevated>
-
-      <q-toolbar-title>
-         <i class="fas fa-feather-alt"></i>
-          Blog Haven 
-        </q-toolbar-title>
-        <div class="q-pa-md" style="max-width: 350px">
-    <q-list bordered separator>
-      <q-item clickable v-ripple>
-        <q-item-section><sign-up><SignUp/></sign-up></q-item-section>
-      </q-item>
-    </q-list>
-        </div>
-    </q-drawer> -->
 
     <q-page-container>
       <router-view />
@@ -49,9 +36,28 @@ export default {
 
   data() {
     return {
-      left: false,
+      user: null
     };
   },
+  beforeMount() {
+    this.user = localStorage.getItem("loggedUser")
+    console.log(this.user)
+    if (this.user) {
+      this.$store.commit('updateloggedOnStatus', true)
+    }
+    else {
+      this.$store.commit('updateloggedOnStatus', false)
+    }
+  },
+  methods: {
+    handleSignout() {
+      localStorage.removeItem('loggedUser')
+      console.log('removed from localstorage')
+      alert('User logged out successfully')
+      window.location.reload()
+    }
+  },
+  
   computed: {
     loggedOn: {
       get() {
