@@ -5,10 +5,10 @@
       <div class="col-sm-6">
         <div class="user-card">
           <div class="thumbnail">
-            <img class="blog-img" :src="usersBlogs[0].image" />
+            <img class="blog-img" :src="this.user.image" />
           </div>
-          <h4>@{{ usersBlogs[0].username }}</h4>
-          <h5>Joined: {{ getUserDate(usersBlogs[0].date_started) }}</h5>
+          <h4>@{{ this.user.username }}</h4>
+          <h5>Joined: {{ getUserDate(this.user.date_started) }}</h5>
         </div>
       </div>
       <div class="col-sm-6">
@@ -115,10 +115,12 @@ export default {
       filesImages: null,
       usersBlogs: [""],
       userid: null,
+      user: [""],
     };
   },
   created() {
     this.handleGetUserBlogs();
+    this.handleGetUser();
   },
   methods: {
     getUserDate: function (date) {
@@ -155,7 +157,24 @@ export default {
           this.usersBlogs = json;
         });
     },
-
+    handleGetUser() {
+      console.log("getting user...")
+      const url = `http://localhost:3000/users/${this.userid}`
+      fetch(url, {
+        //method: "GET", //get post put delete, default GET
+        //body: JSON.stringify(), //object containing data from vue from 2way data binding
+        mode: "cors", //if FE and BE are on diffeent hosts/url
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          // console.log(json[0])
+          this.user = json[0];
+        });
+      
+    },
     toggleEdit() {
       (this.create = false), (this.edit = true), (this.inception = false);
     },
@@ -164,12 +183,6 @@ export default {
     },
     toggleDelete() {
       (this.inception = true), (this.create = true), (this.edit = false);
-    },
-    handleLoggedUser() {
-      const loggedUser = localStorage.getItem("loggedUser");
-      const token = localStorage.getItem("token");
-      if (loggedUser && token) {
-      }
     },
   },
 };

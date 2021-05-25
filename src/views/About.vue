@@ -5,3 +5,18 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data: {
+    user: []
+  },
+  beforeMount() {
+    
+  }
+}
+</script>
+
+<style>
+
+</style>

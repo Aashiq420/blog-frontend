@@ -115,7 +115,11 @@ export default {
           headers: {
             "Content-Type": "application/json",
           },
-        }).then((response) => response.json());
+        }).then((response) => response.json())
+          .then((json) => {
+            alert("Blog posted!")
+            window.location.reload()
+          })
         // .then((json) => {
         //   //API response gets returned
         //   console.log(json);

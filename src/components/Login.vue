@@ -29,6 +29,7 @@
             <q-input
               square
               outlined
+              type="password"
               v-model="password"
               label="Password"
               lazy-rules

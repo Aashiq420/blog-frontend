@@ -2,15 +2,13 @@
   <q-layout view="hHr LpR fFf">
     <q-header elevated class="bg-primary text-white" height-hint="98">
       <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="left = !left" />
-        <i class="fas fa-feather-alt"></i>
         <q-toolbar-title> Blog Haven </q-toolbar-title>
         <q-tabs align="left">
           <q-route-tab to="/" :icon="'fas fa-users'" />
           <!-- <q-route-tab to="/signup" label="sign-up" /> -->
           <q-route-tab to="/about" :icon="'fas fa-info-circle'" exact/>
           <!-- <q-route-tab to="/login" label="Login" /> -->
-          <q-route-tab v-if="loggedOn" to="/myprofile" :icon="'fas fa-user'" />
+          <q-route-tab v-if="loggedOn" to="/myprofile" :icon="'fas fa-user'" @click="window.location.href='http://localhost:8080/myprofile'"/>
           <q-route-tab v-if="!loggedOn"><login><Login /></login></q-route-tab>
           <q-route-tab v-else>
             <q-btn color="primary" label="Sign Out" @click.prevent="handleSignout()" />
@@ -53,6 +51,7 @@ export default {
   methods: {
     handleSignout() {
       localStorage.removeItem('loggedUser')
+      localStorage.removeItem('id')
       console.log('removed from localstorage')
       alert('User logged out successfully')
       window.location.href = 'http://localhost:8080/'
