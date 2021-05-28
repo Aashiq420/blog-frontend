@@ -79,11 +79,11 @@ export default {
 };
 </script>
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Original+Surfer&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Original+Surfer&display=swap");
 
 * {
   font-family: "Original Surfer", cursive;
-}
+} */
 
 .row {
   display: -ms-flexbox;

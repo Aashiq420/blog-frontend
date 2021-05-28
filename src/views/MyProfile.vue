@@ -8,6 +8,7 @@
             <img class="blog-img" :src="this.user.image" />
           </div>
           <h4>@{{ this.user.username }}</h4>
+          <h5>Blogs: {{ this.blogLength }}</h5>
           <h5>Joined: {{ getUserDate(this.user.date_started) }}</h5>
         </div>
       </div>
@@ -76,7 +77,7 @@
                   </div>
 
                   <div class="btn-holder">
-                    <q-btn push icon="fas fa-edit" @click="toggleEdit" />
+                    <q-btn push icon="fas fa-edit" @click="toggleEdit(usersBlog.id)" />
                     <q-btn push icon="fas fa-trash-alt" @click="toggleDelete" />
                   </div>
                 </q-item-label>
@@ -111,6 +112,7 @@ export default {
     return {
       create: true,
       edit: false,
+      blogLength: null,
       // inception: false,
       filesImages: null,
       usersBlogs: [""],
@@ -138,10 +140,9 @@ export default {
       });
     },
     handleGetUserBlogs() {
-      this.userid = localStorage.getItem('id')
-      console.log(this.userid)
+      const userid = localStorage.getItem('id')
       
-      const url = `http://localhost:3000/blogs-of-user/${this.userid}`;
+      const url = `http://localhost:3000/blogs-of-user/${userid}`;
       fetch(url, {
         //method: "GET", //get post put delete, default GET
         //body: JSON.stringify(), //object containing data from vue from 2way data binding
@@ -153,13 +154,14 @@ export default {
         .then((response) => response.json())
         .then((json) => {
           //API response gets returned
-          //console.log(json)
+          console.log(json)
           this.usersBlogs = json;
+          this.blogLength = json.length
         });
     },
     handleGetUser() {
-      console.log("getting user...")
-      const url = `http://localhost:3000/users/${this.userid}`
+      const userid = localStorage.getItem('id')
+      const url = `http://localhost:3000/users/${userid}`
       fetch(url, {
         //method: "GET", //get post put delete, default GET
         //body: JSON.stringify(), //object containing data from vue from 2way data binding
@@ -175,7 +177,10 @@ export default {
         });
       
     },
-    toggleEdit() {
+    toggleEdit(blogid) {
+      console.log(blogid, typeof(blogid))
+      localStorage.removeItem('blogid');
+      localStorage.setItem('blogid', JSON.stringify(blogid));
       (this.create = false), (this.edit = true), (this.inception = false);
     },
     toggleCreate() {
