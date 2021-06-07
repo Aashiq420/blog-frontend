@@ -26,6 +26,7 @@
 export default {
   inception: false,
 };
+
 </script>
 
 <style>
