@@ -12,11 +12,44 @@
           <q-route-tab v-if="!loggedOn"><login><Login /></login></q-route-tab>
           <q-route-tab v-else>
             <q-btn color="primary" label="Sign Out" @click.prevent="handleSignout()" />
+
           </q-route-tab>
         </q-tabs>
       </q-toolbar>
     </q-header>
+    <q-drawer v-model="left" side="left" overlay elevated>
+      <q-toolbar-title>
+        <i class="fas fa-feather-alt"></i>
+        Blog Haven
+      </q-toolbar-title>
+      <!-- drawer content -->
+      <div class="q-pa-md" style="max-width: 350px">
+        <q-list bordered separator>
+          <q-item clickable v-ripple>
+            <q-item-section>
+              <sign-up>
+                <SignUp />
+              </sign-up>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </div>
+    </q-drawer>
 
+    <!-- <q-drawer v-model="left" side="left" overlay elevated>
+
+      <q-toolbar-title>
+         <i class="fas fa-feather-alt"></i>
+          Blog Haven 
+        </q-toolbar-title>
+        <div class="q-pa-md" style="max-width: 350px">
+    <q-list bordered separator>
+      <q-item clickable v-ripple>
+        <q-item-section><sign-up><SignUp/></sign-up></q-item-section>
+      </q-item>
+    </q-list>
+        </div>
+    </q-drawer> -->
 
     <q-page-container>
       <router-view />
@@ -64,7 +97,7 @@ export default {
         return this.$store.state.loggedOn;
       },
       set(value) {
-        this.$store.commit(" updateloggedOnStatus", value);
+        this.$store.commit("updateloggedOnStatus", value);
       },
     },
     signedUp: {

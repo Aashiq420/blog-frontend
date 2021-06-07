@@ -41,18 +41,18 @@
             <div class="blog-data">
               <q-item-section top>
                 <q-item-label lines="1">
-                  <span class="text-weight-large blog-title"
-                    >{{ usersBlog.blog_title }} </span
-                  ><br />
+                  <span class="text-weight-large blog-title">
+                    {{ usersBlog.blog_title }}
+                  </span>
+                  <br />
                   <span class="text-grey-8 blog-poster">
                     by {{ usersBlog.username }} ·
                     {{ getBlogDate(usersBlog.date_blogCreated) }}
                   </span>
-                  <!-- · {{ blogMade() }} -->
                   <br />
                   <span class="text-grey-8 blog-topic">
-                    topic: {{ usersBlog.blog_topic }}</span
-                  >
+                    topic: {{ usersBlog.blog_topic }}
+                  </span>
                 </q-item-label>
                 <q-separator />
                 <br />
@@ -73,7 +73,9 @@
                       label="60"
                     />
                     |
-                    <span class="cursor-pointer"> Read more</span>
+                    <span class="cursor-pointer" @click="handleGetBlog(usersBlog.id)">
+                      Read more</span
+                    >
                   </div>
 
                   <div class="btn-holder">
@@ -84,6 +86,98 @@
               </q-item-section>
             </div>
           </div>
+          <!-- blog readme -->
+          <q-dialog v-model="medium">
+            <q-card class="my-card" flat bordered>
+              <q-img :src="usersBlog.blog_image"></q-img>
+
+              <q-card-section>
+                <div class="text-overline text-grey-9">
+                  {{ usersBlog.username }}
+                </div>
+                <div class="text-h5 q-mt-sm q-mb-xs">
+                  {{ usersBlog.blog_title }}
+                </div>
+                <div class="text-caption text-grey">
+                  {{ usersBlog.blog_content }}
+                </div>
+              </q-card-section>
+
+              <q-card-actions>
+                <q-btn flat color="dark" label="Like"></q-btn>
+                <q-btn flat color="primary" label="14"></q-btn>
+
+                <q-space></q-space>
+
+                <q-btn
+                  color="grey"
+                  flat
+                  dense
+                  label="comments"
+                  @click="expanded = !expanded"
+                ></q-btn>
+              </q-card-actions>
+
+              <q-slide-transition>
+                <div v-show="expanded">
+                  <q-separator></q-separator>
+                  <q-card-section class="text-subitle2">
+                    <div class="text-caption text-grey">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
+                      <hr />
+                    </div>
+                    <div class="text-caption text-grey">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
+                      <hr />
+                    </div>
+                    <div class="text-caption text-grey">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
+                      <hr />
+                    </div>
+                  </q-card-section>
+                </div>
+              </q-slide-transition>
+            </q-card>
+          </q-dialog>
+          <!-- blog readme end  -->
+
+          <!-- delete blog -->
+          <q-dialog v-model="small">
+            <q-card style="width: 300px">
+              <q-card-section>
+                <div class="text-h6">Delete Account</div>
+              </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                Are you sure you want to delete your account?
+              </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                <q-card-actions align="center">
+                  <q-btn
+                    flat
+                    label="YES"
+                    align="left"
+                    v-close-popup
+                    class="bg-white text-red"
+                  ></q-btn>
+                  <q-btn
+                    flat
+                    label="NO"
+                    align="right"
+                    v-close-popup
+                    class="bg-white text-teal"
+                  ></q-btn>
+                </q-card-actions>
+              </q-card-section>
+            </q-card>
+          </q-dialog>
         </q-item>
 
       </div>
@@ -110,6 +204,7 @@ export default {
   },
   data() {
     return {
+      expanded: false, // from readmore dialog/modal
       create: true,
       edit: false,
       blogLength: null,
@@ -118,6 +213,7 @@ export default {
       usersBlogs: [""],
       userid: null,
       user: [""],
+
     };
   },
   created() {
@@ -162,6 +258,31 @@ export default {
     handleGetUser() {
       const userid = localStorage.getItem('id')
       const url = `http://localhost:3000/users/${userid}`
+
+    // handleGetBlog() {
+    //   const url = `http://localhost:3000/blogs/${this.usersBlogs[0].id}`;
+    //   fetch(url, {
+    //     //method: "GET", //get post put delete, default GET
+    //     //body: JSON.stringify(), //object containing data from vue from 2way data binding
+    //     mode: "cors", //if FE and BE are on diffeent hosts/url
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //     .then((response) => response.json())
+    //     .then((json) => {
+    //       //API response gets returned
+    //       //console.log(json)
+    //       this.blogs = json;
+    //       console.log(this.blogs);
+    //       var i;
+    //       for (i = 0; i < this.usersBlogs.length; i++) {
+    //         console.log(this.usersBlogs[i].id);
+    //       }
+    //     });
+    // },
+        handleGetBlog: function (data) {
+      const url = `http://localhost:3000/blogs/${data}`;
       fetch(url, {
         //method: "GET", //get post put delete, default GET
         //body: JSON.stringify(), //object containing data from vue from 2way data binding
@@ -181,6 +302,18 @@ export default {
       console.log(blogid, typeof(blogid))
       localStorage.removeItem('blogid');
       localStorage.setItem('blogid', JSON.stringify(blogid));
+          //API response gets returned
+          //console.log(json)
+          this.blogs = json;
+          console.log(this.blogs);
+          // var i;
+          // for (i = 0; i < this.usersBlogs.length; i++) {
+          //   console.log(this.usersBlogs[i].id);
+          // }
+        });
+    },
+
+    toggleEdit() {
       (this.create = false), (this.edit = true), (this.inception = false);
     },
     toggleCreate() {
@@ -196,6 +329,11 @@ export default {
 <style>
 .my-blogs h1 {
   text-align: center;
+}
+
+.my-card {
+  width: 100%;
+  max-width: 350px;
 }
 
 .user-card {
