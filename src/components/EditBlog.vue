@@ -2,13 +2,13 @@
   <div class="q-pa-md addUser-form">
     <!-- <h1>Edit</h1> -->
     <div class="thumbnail">
-      <img class="blog-img" :src="blogs[0].blog_image" />
+      <img class="blog-img" :src="blog_image" />
     </div>
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <q-input
         class="input"
         filled
-        v-model="blogs[0].blog_title"
+        v-model="blogTitle"
         label="Blog Title"
         lazy-rules
       >
@@ -16,7 +16,7 @@
       </q-input>
       <q-select
         filled
-        v-model="blogs[0].blog_topic"
+        v-model="blogTopic"
         label="Topic"
         :options="options"
       />
@@ -24,11 +24,11 @@
         class="input"
         filled
         type="textarea"
-        v-model="blogs[0].blog_content"
+        v-model="blogText"
         lazy-rules
       />
       <q-file
-        v-model="blogs[0].blog_image"
+        v-model="blog_image"
         filled
         label="Click here to select image"
         accept=".jpg, .png, image/*"
@@ -39,7 +39,7 @@
         </template>
       </q-file>
       <div>
-        <q-btn label="Post" type="submit" color="primary" @click="createBlog" />
+        <q-btn label="Update" type="submit" color="primary" @click="editBlog" />
         <q-btn
           icon="fas fa-redo-alt"
           type="reset"
@@ -56,10 +56,10 @@
 export default {
   data() {
     return {
-      blogs: [""],
-      blogTitle: "",
+      blog: [""],
+      blogTitle: null,
       blogText: null,
-      userid: "2",
+      userid: null,
       blogTopic: null,
       blog_image: null,
       options: [
@@ -102,7 +102,9 @@ export default {
       this.text = null;
     },
     handleGetBlog() {
-      const url = "http://localhost:3000/blogs/1";
+      const blogid = localStorage.getItem('blogid')
+
+      const url = `http://localhost:3000/blogs/${blogid}`;
       fetch(url, {
         //method: "GET", //get post put delete, default GET
         //body: JSON.stringify(), //object containing data from vue from 2way data binding
@@ -114,19 +116,28 @@ export default {
         .then((response) => response.json())
         .then((json) => {
           //API response gets returned
-          //console.log(json)
-          this.blogs = json;
-          console.log(this.blogs[0].blog_title);
+          console.log(json)
+          this.blogTitle = json[0].blog_title;
+          this.blogTopic = json[0].blog_topic;
+          this.blogText = json[0].blog_content;
+          this.blog_image = json[0].blog_image;
+          this.userid = json[0].user_id
+          window.scrollTo(0, 0);
+
+          // console.log(JSON.stringify(json.blog_title))
+          // console.log(this.blogs[0].blog_title);
         });
     },
     editBlog() {
       const blob = new Blob([this.blog_image], { type: "image" });
       const reader = new FileReader();
+      const blogid = localStorage.getItem('blogid')
+      const userid = localStorage.getItem('id')
 
       reader.readAsDataURL(blob);
       reader.onload = () => {
         this.blog_image = reader.result;
-        const url = `http://localhost:3000/blogs/1`;
+        const url = `http://localhost:3000/blogs/${blogid}`;
         fetch(url, {
           method: "PUT", //get post put delete, default GET
           body: JSON.stringify({
@@ -134,13 +145,14 @@ export default {
             blog_content: this.blogText,
             blog_topic: this.blogTopic,
             blog_image: this.blog_image,
-            user_id: this.userid,
-          }), //object containing data from vue from 2way data binding
+            user_id: userid,
+          }), 
           mode: "cors", //if FE and BE are on diffeent hosts/url
           headers: {
             "Content-Type": "application/json",
           },
-        }).then((response) => response.json());
+        }).then((response) => response.json())
+          .then((json) => console.log(json));
       };
       reader.onerror = function (error) {
         console.log("Error: ", error);

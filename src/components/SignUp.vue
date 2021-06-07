@@ -94,6 +94,7 @@ export default {
       email: null,
       password: null,
       image: null,
+      token: null,
       role: "user", //figure out way to do this better
       accept: false,
       large: false,
@@ -132,9 +133,6 @@ export default {
     addUser() {
       const blob = new Blob([this.image], { type: "image" });
       const reader = new FileReader();
-
-      console.log(this.username, this.email, this.password, this.role);
-
       reader.readAsDataURL(blob);
       reader.onload = () => {
         // console.log("file to base64 result:" + reader.result);
@@ -156,15 +154,36 @@ export default {
         })
           .then((response) => response.json())
           .then((json) => {
-            //API response gets returned
-            console.log(json);
-          });
+            this.token = json.token
+            alert(`User ${this.name} has been created `)
+            this.loginUser()
+          })
+          .catch((err) => console.log("error: "+err))
       };
 
       reader.onerror = function (error) {
         console.log("Error: ", error);
       };
     },
+    loginUser() {
+      const url = "http://localhost:3000/auth"
+       fetch(url, {
+          mode: "cors", //if FE and BE are on diffeent hosts/url
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": this.token
+          },
+        })
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json)//user logged in
+          localStorage.setItem('loggedUser',JSON.stringify(json))
+          localStorage.setItem('id',JSON.stringify(json.id))
+          this.$store.commit('updateloggedOnStatus', true)
+          alert(`user ${this.name} is logged on`)
+        })
+        .catch((err) => console.log("error: "+err))
+    }
   },
 };
 </script>

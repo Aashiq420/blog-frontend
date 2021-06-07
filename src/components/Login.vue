@@ -29,6 +29,7 @@
             <q-input
               square
               outlined
+              type="password"
               v-model="password"
               label="Password"
               lazy-rules
@@ -74,6 +75,8 @@ export default {
     return {
       email: null,
       password: null,
+      token: null,
+
       medium: false,
     };
   },
@@ -108,7 +111,6 @@ export default {
       this.password = null;
     },
     handleLogin() {
-      console.log("click");
       const url = "http://localhost:3000/auth";
       fetch(url, {
         method: "POST", //get post put delete, default GET
@@ -123,35 +125,30 @@ export default {
       })
         .then((response) => response.json())
         .then((json) => {
-          console.log(json);
-          localStorage.setItem("token", json);
-          const url2 = "http://localhost:3000/users";
-          fetch(url2, {
-            mode: "cors", //if FE and BE are on diffeent hosts/url
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => response.json())
-            .then((res) => {
-              let user = res.filter((user) => {
-                return user.email === this.email;
-              });
-              console.log(user);
-              localStorage.setItem("loggedUser", user);
-              this.$store.state.loggedOn = true;
-              //window.location.href = "http://localhost:8080/";
-            });
-          //API response gets returned
-          // console.log(users)
-          // console.log(this.email, this.password)
-          //this.blogs = json
-          // let user = users.filter(user => {
-          //   return user.username === this.email && user.password === this.password
-          // })
-          // console.log(user)
+          console.log(json);//token
+          this.token = json.token
+          this.authLogin()
         });
     },
+    authLogin() {
+      const url = "http://localhost:3000/auth"
+      fetch(url, {
+        mode: "cors", //if FE and BE are on diffeent hosts/url
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": this.token
+        },
+      })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json)//user logged in
+        localStorage.setItem('loggedUser',JSON.stringify(json))
+        localStorage.setItem('id',JSON.stringify(json.id))
+        this.$store.commit('updateloggedOnStatus', true)
+        alert(`user ${this.email} is logged on`)
+      })
+      .catch((err) => console.log("error: "+err))
+    }
   },
 };
 </script>

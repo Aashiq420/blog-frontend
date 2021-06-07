@@ -2,9 +2,9 @@
   <div class="q-pa-md addUser-form">
     <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
       <div class="thumbnail">
-        <img class="blog-img" :src="blog_image" />
+        <!-- <img class="blog-img" :src="blog_image" />
        {{ blog_image 
-       }}
+       }} -->
       </div>
       <q-input
         class="input"
@@ -52,7 +52,7 @@ export default {
     return {
       blogTitle: null,
       blogText: null,
-      userid: "2",
+      userid: null,
       blogTopic: null,
       blog_image: null,
       options: [
@@ -93,6 +93,7 @@ export default {
       this.text = null;
     },
     createBlog() {
+      this.userid = localStorage.getItem('id')
       const blob = new Blob([this.blog_image], { type: "image" });
       const reader = new FileReader();
 
@@ -114,7 +115,11 @@ export default {
           headers: {
             "Content-Type": "application/json",
           },
-        }).then((response) => response.json());
+        }).then((response) => response.json())
+          .then((json) => {
+            alert("Blog posted!")
+            window.location.reload()
+          })
         // .then((json) => {
         //   //API response gets returned
         //   console.log(json);

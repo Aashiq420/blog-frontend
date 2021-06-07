@@ -2,25 +2,21 @@
   <q-layout view="hHr LpR fFf">
     <q-header elevated class="bg-primary text-white" height-hint="98">
       <q-toolbar>
-        <!-- <q-btn dense flat round icon="menu" @click="left = !left" /> -->
-        <q-toolbar-title>
-          <i class="fas fa-feather-alt"></i> Blog Haven
-        </q-toolbar-title>
+        <q-toolbar-title> Blog Haven </q-toolbar-title>
         <q-tabs align="left">
-          <q-route-tab to="/" icon="fas fa-users" />
-          <q-route-tab to="/about" icon="fas fa-info-circle" />
+          <q-route-tab to="/" :icon="'fas fa-users'" />
+          <!-- <q-route-tab to="/signup" label="sign-up" /> -->
+          <q-route-tab to="/about" :icon="'fas fa-info-circle'" exact/>
           <!-- <q-route-tab to="/login" label="Login" /> -->
-          <q-route-tab v-if="loggedOn" to="/myprofile" icon="fas fa-user" />
-          <q-route-tab to="/signup" label="sign-up" />
-          <q-route-tab>
-            <login>
-              <Login />
-            </login>
+          <q-route-tab v-if="loggedOn" to="/myprofile" :icon="'fas fa-user'" @click="window.location.href='http://localhost:8080/myprofile'"/>
+          <q-route-tab v-if="!loggedOn"><login><Login /></login></q-route-tab>
+          <q-route-tab v-else>
+            <q-btn color="primary" label="Sign Out" @click.prevent="handleSignout()" />
+
           </q-route-tab>
         </q-tabs>
       </q-toolbar>
     </q-header>
-
     <q-drawer v-model="left" side="left" overlay elevated>
       <q-toolbar-title>
         <i class="fas fa-feather-alt"></i>
@@ -72,9 +68,29 @@ export default {
 
   data() {
     return {
-      left: false,
+      user: null
     };
   },
+  beforeMount() {
+    this.user = localStorage.getItem("loggedUser")
+    // console.log(this.user)
+    if (this.user) {
+      this.$store.commit('updateloggedOnStatus', true)
+    }
+    else {
+      this.$store.commit('updateloggedOnStatus', false)
+    }
+  },
+  methods: {
+    handleSignout() {
+      localStorage.removeItem('loggedUser')
+      localStorage.removeItem('id')
+      console.log('removed from localstorage')
+      alert('User logged out successfully')
+      window.location.href = 'http://localhost:8080/'
+    }
+  },
+  
   computed: {
     loggedOn: {
       get() {
@@ -96,11 +112,11 @@ export default {
 };
 </script>
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Original+Surfer&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Original+Surfer&display=swap");
 
 * {
   font-family: "Original Surfer", cursive;
-}
+} */
 
 .row {
   display: -ms-flexbox;

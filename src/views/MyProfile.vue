@@ -5,11 +5,11 @@
       <div class="col-sm-6">
         <div class="user-card">
           <div class="thumbnail">
-            <img class="blog-img" :src="usersBlogs[0].image" />
+            <img class="blog-img" :src="this.user.image" />
           </div>
-          <h4>@{{ usersBlogs[0].username }}</h4>
-
-          <h5>Joined: {{ getUserDate(usersBlogs[0].date_started) }}</h5>
+          <h4>@{{ this.user.username }}</h4>
+          <h5>Blogs: {{ this.blogLength }}</h5>
+          <h5>Joined: {{ getUserDate(this.user.date_started) }}</h5>
         </div>
       </div>
       <div class="col-sm-6">
@@ -57,21 +57,8 @@
                 <q-separator />
                 <br />
                 <q-item-label caption lines="3">
-                  <p class="blog-text">
-                    <!-- {{ usersBlog.blog_content}} -->
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Facere sit ipsa saepe fugit magnam, optio repellendus vitae
-                    minima rerum accusantium facilis delectus dolorum.
-                    Consequatur officia minus nulla numquam, adipisci, porro
-                    error culpa ullam aliquid unde consequuntur reprehenderit ab
-                    eius, amet perferendis quaerat repellendus necessitatibus
-                    rerum? Iure tempora in, nobis ipsam nulla at. Blanditiis
-                    dicta placeat maxime dolore aliquam officia, impedit tempora
-                    quidem ea, illum quas fuga voluptatem cum eos eius magni
-                    laudantium omnis corrupti, facilis deleniti! Rerum quae
-                    voluptas harum sit ad aliquid consequatur est deserunt iure,
-                    voluptatum accusantium dignissimos quis quo itaque earum
-                    aspernatur delectus atque! Odit, atque non.
+                  <p class="blog-text ellipsis">
+                    {{ usersBlog.blog_content}}
                   </p>
                 </q-item-label>
                 <q-item-label
@@ -92,8 +79,8 @@
                   </div>
 
                   <div class="btn-holder">
-                    <q-btn push icon="fas fa-edit" @click="toggleEdit" />
-                    <q-btn push icon="fas fa-trash-alt" @click="small = true" />
+                    <q-btn push icon="fas fa-edit" @click="toggleEdit(usersBlog.id)" />
+                    <q-btn push icon="fas fa-trash-alt" @click="toggleDelete" />
                   </div>
                 </q-item-label>
               </q-item-section>
@@ -192,6 +179,7 @@
             </q-card>
           </q-dialog>
         </q-item>
+
       </div>
     </div>
   </div>
@@ -219,15 +207,18 @@ export default {
       expanded: false, // from readmore dialog/modal
       create: true,
       edit: false,
-      // inception: false, // from delete blog component
+      blogLength: null,
+      // inception: false,
       filesImages: null,
       usersBlogs: [""],
-      medium: false,
-      small: false,
+      userid: null,
+      user: [""],
+
     };
   },
   created() {
     this.handleGetUserBlogs();
+    this.handleGetUser();
   },
   methods: {
     getUserDate: function (date) {
@@ -245,7 +236,9 @@ export default {
       });
     },
     handleGetUserBlogs() {
-      const url = "http://localhost:3000/blogs-of-user/2";
+      const userid = localStorage.getItem('id')
+      
+      const url = `http://localhost:3000/blogs-of-user/${userid}`;
       fetch(url, {
         //method: "GET", //get post put delete, default GET
         //body: JSON.stringify(), //object containing data from vue from 2way data binding
@@ -257,10 +250,14 @@ export default {
         .then((response) => response.json())
         .then((json) => {
           //API response gets returned
-          //console.log(json)
+          console.log(json)
           this.usersBlogs = json;
+          this.blogLength = json.length
         });
     },
+    handleGetUser() {
+      const userid = localStorage.getItem('id')
+      const url = `http://localhost:3000/users/${userid}`
 
     // handleGetBlog() {
     //   const url = `http://localhost:3000/blogs/${this.usersBlogs[0].id}`;
@@ -296,6 +293,15 @@ export default {
       })
         .then((response) => response.json())
         .then((json) => {
+          // console.log(json[0])
+          this.user = json[0];
+        });
+      
+    },
+    toggleEdit(blogid) {
+      console.log(blogid, typeof(blogid))
+      localStorage.removeItem('blogid');
+      localStorage.setItem('blogid', JSON.stringify(blogid));
           //API response gets returned
           //console.log(json)
           this.blogs = json;
@@ -315,12 +321,6 @@ export default {
     },
     toggleDelete() {
       (this.inception = true), (this.create = true), (this.edit = false);
-    },
-    handleLoggedUser() {
-      const loggedUser = localStorage.getItem("loggedUser");
-      const token = localStorage.getItem("token");
-      if (loggedUser && token) {
-      }
     },
   },
 };
@@ -347,6 +347,7 @@ export default {
 }
 
 .thumbnail {
+  width: 30%;
   margin: auto;
   text-align: center;
 }
@@ -379,5 +380,11 @@ export default {
 
 .blog-topic {
   margin-bottom: 15px;
+}
+.blog-data {
+  width: 70%;
+}
+.blog-card{
+  width: 100%;
 }
 </style>
